@@ -1,10 +1,14 @@
+import { lazy, Suspense } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ActionsProvider } from '@/context/ActionsContext';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Layout } from '@/components/Layout';
 import DashboardOverview from '@/pages/DashboardOverview';
-import { WorkflowPlaceholders } from '@/components/WorkflowPlaceholders';
 import AdminPage from '@/pages/AdminPage';
+
+const AuditDurchfuehrungPage = lazy(() => import('@/pages/intents/AuditDurchfuehrungPage'));
+const RisikoBehandlungPage = lazy(() => import('@/pages/intents/RisikoBehandlungPage'));
+const IncidentResponsePage = lazy(() => import('@/pages/intents/IncidentResponsePage'));
 import RisikomanagementPage from '@/pages/RisikomanagementPage';
 import OrganisationseinheitenPage from '@/pages/OrganisationseinheitenPage';
 import SoaManagementPage from '@/pages/SoaManagementPage';
@@ -61,7 +65,10 @@ export default function App() {
             <Route path="public/69d8a2cb92e804d39a7888eb" element={<PublicFormAssetRegister />} />
             <Route path="public/69d8a2d7cc4d6bfd1a9a28df" element={<PublicFormPolicyManagement />} />
             <Route element={<Layout />}>
-              <Route index element={<><div className="mb-8"><WorkflowPlaceholders /></div><DashboardOverview /></>} />
+              <Route index element={<DashboardOverview />} />
+              <Route path="intents/audit-durchfuehrung" element={<Suspense fallback={null}><AuditDurchfuehrungPage /></Suspense>} />
+              <Route path="intents/risiko-behandlung" element={<Suspense fallback={null}><RisikoBehandlungPage /></Suspense>} />
+              <Route path="intents/incident-response" element={<Suspense fallback={null}><IncidentResponsePage /></Suspense>} />
               <Route path="risikomanagement" element={<RisikomanagementPage />} />
               <Route path="organisationseinheiten" element={<OrganisationseinheitenPage />} />
               <Route path="soa-management" element={<SoaManagementPage />} />

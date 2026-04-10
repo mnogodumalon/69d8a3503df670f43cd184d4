@@ -260,6 +260,33 @@ export default function DashboardOverview() {
 
   return (
     <div className="space-y-6">
+      {/* ── Intent Workflows ────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <a href="#/intents/audit-durchfuehrung" className="flex items-center gap-3 bg-card border border-border border-l-4 border-l-primary rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
+          <IconClipboardList size={22} className="text-primary shrink-0" stroke={1.5} />
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-sm truncate">Audit durchführen</div>
+            <div className="text-xs text-muted-foreground truncate">Findings erfassen, Maßnahmen ableiten & Aufgaben delegieren</div>
+          </div>
+          <IconChevronRight size={16} className="text-muted-foreground shrink-0 group-hover:text-primary transition-colors" stroke={1.5} />
+        </a>
+        <a href="#/intents/risiko-behandlung" className="flex items-center gap-3 bg-card border border-border border-l-4 border-l-primary rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
+          <IconShield size={22} className="text-primary shrink-0" stroke={1.5} />
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-sm truncate">Risiko behandeln</div>
+            <div className="text-xs text-muted-foreground truncate">Strategie festlegen, Maßnahmen anlegen & Kontrollen zuordnen</div>
+          </div>
+          <IconChevronRight size={16} className="text-muted-foreground shrink-0 group-hover:text-primary transition-colors" stroke={1.5} />
+        </a>
+        <a href="#/intents/incident-response" className="flex items-center gap-3 bg-card border border-border border-l-4 border-l-primary rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
+          <IconBug size={22} className="text-primary shrink-0" stroke={1.5} />
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-sm truncate">Incident bearbeiten</div>
+            <div className="text-xs text-muted-foreground truncate">Assets zuordnen, Maßnahmen einleiten & Incident schließen</div>
+          </div>
+          <IconChevronRight size={16} className="text-muted-foreground shrink-0 group-hover:text-primary transition-colors" stroke={1.5} />
+        </a>
+      </div>
       {/* ── KPI Row ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
