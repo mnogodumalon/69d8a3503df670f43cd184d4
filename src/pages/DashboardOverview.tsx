@@ -125,6 +125,33 @@ export default function DashboardOverview() {
 
   return (
     <div className="space-y-6">
+      {/* Workflow-Navigation */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <a href="#/intents/incident-response" className="bg-card border border-border border-l-4 border-l-primary rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex items-center gap-3 min-w-0">
+          <IconAlertTriangle size={22} className="text-primary shrink-0" />
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-sm truncate">Incident bearbeiten</div>
+            <div className="text-xs text-muted-foreground truncate">Vorfall → Risiken → Maßnahmen → Tasks</div>
+          </div>
+          <IconChevronRight size={16} className="text-muted-foreground shrink-0" />
+        </a>
+        <a href="#/intents/audit-durchfuehrung" className="bg-card border border-border border-l-4 border-l-primary rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex items-center gap-3 min-w-0">
+          <IconClipboardCheck size={22} className="text-primary shrink-0" />
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-sm truncate">Audit durchführen</div>
+            <div className="text-xs text-muted-foreground truncate">Audit → Kontrollen → Findings → Abschluss</div>
+          </div>
+          <IconChevronRight size={16} className="text-muted-foreground shrink-0" />
+        </a>
+        <a href="#/intents/risiko-behandlung" className="bg-card border border-border border-l-4 border-l-primary rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex items-center gap-3 min-w-0">
+          <IconShield size={22} className="text-primary shrink-0" />
+          <div className="min-w-0 flex-1">
+            <div className="font-semibold text-sm truncate">Risiko behandeln</div>
+            <div className="text-xs text-muted-foreground truncate">Risiko → Maßnahmen → SoA → Aufgaben</div>
+          </div>
+          <IconChevronRight size={16} className="text-muted-foreground shrink-0" />
+        </a>
+      </div>
       {/* KPI Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard

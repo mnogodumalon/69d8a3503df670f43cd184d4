@@ -3,8 +3,10 @@ import { ActionsProvider } from '@/context/ActionsContext';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Layout } from '@/components/Layout';
 import DashboardOverview from '@/pages/DashboardOverview';
-import { WorkflowPlaceholders } from '@/components/WorkflowPlaceholders';
 import AdminPage from '@/pages/AdminPage';
+import IncidentResponsePage from '@/pages/intents/IncidentResponsePage';
+import AuditDurchfuehrungPage from '@/pages/intents/AuditDurchfuehrungPage';
+import RisikoBehandlungPage from '@/pages/intents/RisikoBehandlungPage';
 import BcmNotfallmanagementPage from '@/pages/BcmNotfallmanagementPage';
 import LieferantenmanagementPage from '@/pages/LieferantenmanagementPage';
 import PolicyManagementPage from '@/pages/PolicyManagementPage';
@@ -61,7 +63,10 @@ export default function App() {
             <Route path="public/69d8a2d0445d7fa47b771835" element={<PublicFormKontrollManagement />} />
             <Route path="public/69d8a2daf82a6e90d0765807" element={<PublicFormAwarenessSchulungen />} />
             <Route element={<Layout />}>
-              <Route index element={<><div className="mb-8"><WorkflowPlaceholders /></div><DashboardOverview /></>} />
+              <Route index element={<DashboardOverview />} />
+              <Route path="intents/incident-response" element={<IncidentResponsePage />} />
+              <Route path="intents/audit-durchfuehrung" element={<AuditDurchfuehrungPage />} />
+              <Route path="intents/risiko-behandlung" element={<RisikoBehandlungPage />} />
               <Route path="bcm-&-notfallmanagement" element={<BcmNotfallmanagementPage />} />
               <Route path="lieferantenmanagement" element={<LieferantenmanagementPage />} />
               <Route path="policy-management" element={<PolicyManagementPage />} />
