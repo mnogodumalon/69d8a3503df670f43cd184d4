@@ -1,39 +1,39 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useDashboardData } from '@/hooks/useDashboardData';
-import type { Risikomanagement, Organisationseinheiten, SoaManagement, Lieferantenmanagement, DokumenteEvidenzen, FrameworkVerwaltung, FindingsAbweichungen, KontrollManagement, AuditManagement, BcmNotfallmanagement, AufgabenFreigaben, AwarenessSchulungen, MassnahmenManagement, IncidentManagement, AssetRegister, PolicyManagement } from '@/types/app';
+import type { BcmNotfallmanagement, AwarenessSchulungen, AufgabenFreigaben, Organisationseinheiten, AssetRegister, FrameworkVerwaltung, Risikomanagement, MassnahmenManagement, KontrollManagement, SoaManagement, AuditManagement, FindingsAbweichungen, IncidentManagement, Lieferantenmanagement, PolicyManagement, DokumenteEvidenzen } from '@/types/app';
 import { LivingAppsService, extractRecordId, cleanFieldsForApi } from '@/services/livingAppsService';
-import { RisikomanagementDialog } from '@/components/dialogs/RisikomanagementDialog';
-import { RisikomanagementViewDialog } from '@/components/dialogs/RisikomanagementViewDialog';
-import { OrganisationseinheitenDialog } from '@/components/dialogs/OrganisationseinheitenDialog';
-import { OrganisationseinheitenViewDialog } from '@/components/dialogs/OrganisationseinheitenViewDialog';
-import { SoaManagementDialog } from '@/components/dialogs/SoaManagementDialog';
-import { SoaManagementViewDialog } from '@/components/dialogs/SoaManagementViewDialog';
-import { LieferantenmanagementDialog } from '@/components/dialogs/LieferantenmanagementDialog';
-import { LieferantenmanagementViewDialog } from '@/components/dialogs/LieferantenmanagementViewDialog';
-import { DokumenteEvidenzenDialog } from '@/components/dialogs/DokumenteEvidenzenDialog';
-import { DokumenteEvidenzenViewDialog } from '@/components/dialogs/DokumenteEvidenzenViewDialog';
-import { FrameworkVerwaltungDialog } from '@/components/dialogs/FrameworkVerwaltungDialog';
-import { FrameworkVerwaltungViewDialog } from '@/components/dialogs/FrameworkVerwaltungViewDialog';
-import { FindingsAbweichungenDialog } from '@/components/dialogs/FindingsAbweichungenDialog';
-import { FindingsAbweichungenViewDialog } from '@/components/dialogs/FindingsAbweichungenViewDialog';
-import { KontrollManagementDialog } from '@/components/dialogs/KontrollManagementDialog';
-import { KontrollManagementViewDialog } from '@/components/dialogs/KontrollManagementViewDialog';
-import { AuditManagementDialog } from '@/components/dialogs/AuditManagementDialog';
-import { AuditManagementViewDialog } from '@/components/dialogs/AuditManagementViewDialog';
 import { BcmNotfallmanagementDialog } from '@/components/dialogs/BcmNotfallmanagementDialog';
 import { BcmNotfallmanagementViewDialog } from '@/components/dialogs/BcmNotfallmanagementViewDialog';
-import { AufgabenFreigabenDialog } from '@/components/dialogs/AufgabenFreigabenDialog';
-import { AufgabenFreigabenViewDialog } from '@/components/dialogs/AufgabenFreigabenViewDialog';
 import { AwarenessSchulungenDialog } from '@/components/dialogs/AwarenessSchulungenDialog';
 import { AwarenessSchulungenViewDialog } from '@/components/dialogs/AwarenessSchulungenViewDialog';
-import { MassnahmenManagementDialog } from '@/components/dialogs/MassnahmenManagementDialog';
-import { MassnahmenManagementViewDialog } from '@/components/dialogs/MassnahmenManagementViewDialog';
-import { IncidentManagementDialog } from '@/components/dialogs/IncidentManagementDialog';
-import { IncidentManagementViewDialog } from '@/components/dialogs/IncidentManagementViewDialog';
+import { AufgabenFreigabenDialog } from '@/components/dialogs/AufgabenFreigabenDialog';
+import { AufgabenFreigabenViewDialog } from '@/components/dialogs/AufgabenFreigabenViewDialog';
+import { OrganisationseinheitenDialog } from '@/components/dialogs/OrganisationseinheitenDialog';
+import { OrganisationseinheitenViewDialog } from '@/components/dialogs/OrganisationseinheitenViewDialog';
 import { AssetRegisterDialog } from '@/components/dialogs/AssetRegisterDialog';
 import { AssetRegisterViewDialog } from '@/components/dialogs/AssetRegisterViewDialog';
+import { FrameworkVerwaltungDialog } from '@/components/dialogs/FrameworkVerwaltungDialog';
+import { FrameworkVerwaltungViewDialog } from '@/components/dialogs/FrameworkVerwaltungViewDialog';
+import { RisikomanagementDialog } from '@/components/dialogs/RisikomanagementDialog';
+import { RisikomanagementViewDialog } from '@/components/dialogs/RisikomanagementViewDialog';
+import { MassnahmenManagementDialog } from '@/components/dialogs/MassnahmenManagementDialog';
+import { MassnahmenManagementViewDialog } from '@/components/dialogs/MassnahmenManagementViewDialog';
+import { KontrollManagementDialog } from '@/components/dialogs/KontrollManagementDialog';
+import { KontrollManagementViewDialog } from '@/components/dialogs/KontrollManagementViewDialog';
+import { SoaManagementDialog } from '@/components/dialogs/SoaManagementDialog';
+import { SoaManagementViewDialog } from '@/components/dialogs/SoaManagementViewDialog';
+import { AuditManagementDialog } from '@/components/dialogs/AuditManagementDialog';
+import { AuditManagementViewDialog } from '@/components/dialogs/AuditManagementViewDialog';
+import { FindingsAbweichungenDialog } from '@/components/dialogs/FindingsAbweichungenDialog';
+import { FindingsAbweichungenViewDialog } from '@/components/dialogs/FindingsAbweichungenViewDialog';
+import { IncidentManagementDialog } from '@/components/dialogs/IncidentManagementDialog';
+import { IncidentManagementViewDialog } from '@/components/dialogs/IncidentManagementViewDialog';
+import { LieferantenmanagementDialog } from '@/components/dialogs/LieferantenmanagementDialog';
+import { LieferantenmanagementViewDialog } from '@/components/dialogs/LieferantenmanagementViewDialog';
 import { PolicyManagementDialog } from '@/components/dialogs/PolicyManagementDialog';
 import { PolicyManagementViewDialog } from '@/components/dialogs/PolicyManagementViewDialog';
+import { DokumenteEvidenzenDialog } from '@/components/dialogs/DokumenteEvidenzenDialog';
+import { DokumenteEvidenzenViewDialog } from '@/components/dialogs/DokumenteEvidenzenViewDialog';
 import { BulkEditDialog } from '@/components/dialogs/BulkEditDialog';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { PageShell } from '@/components/PageShell';
@@ -60,6 +60,100 @@ function fmtDate(d?: string) {
 }
 
 // Field metadata per entity for bulk edit and column filters
+const BCMNOTFALLMANAGEMENT_FIELDS = [
+  { key: 'bcm_title', label: 'Bezeichnung', type: 'string/text' },
+  { key: 'bcm_type', label: 'Typ', type: 'lookup/select', options: [{ key: 'bcp', label: 'Business Continuity Plan (BCP)' }, { key: 'drp', label: 'Disaster Recovery Plan (DRP)' }, { key: 'bia', label: 'Business Impact Analyse (BIA)' }, { key: 'uebung', label: 'Notfallübung' }, { key: 'prozess', label: 'Kritischer Prozess' }, { key: 'sonstiges', label: 'Sonstiges' }] },
+  { key: 'bcm_scope', label: 'Geltungsbereich', type: 'string/textarea' },
+  { key: 'bcm_rto', label: 'Recovery Time Objective (RTO)', type: 'string/text' },
+  { key: 'bcm_rpo', label: 'Recovery Point Objective (RPO)', type: 'string/text' },
+  { key: 'bcm_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
+  { key: 'bcm_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
+  { key: 'bcm_related_asset', label: 'Kritisches Asset', type: 'applookup/select', targetEntity: 'asset_register', targetAppId: 'ASSET_REGISTER', displayField: 'asset_name' },
+  { key: 'bcm_last_test_date', label: 'Letzter Test / Übung', type: 'date/date' },
+  { key: 'bcm_next_test_date', label: 'Nächster Test / Übung', type: 'date/date' },
+  { key: 'bcm_status', label: 'Status', type: 'lookup/select', options: [{ key: 'entwurf', label: 'Entwurf' }, { key: 'freigegeben', label: 'Freigegeben' }, { key: 'in_ueberarbeitung', label: 'In Überarbeitung' }, { key: 'archiviert', label: 'Archiviert' }] },
+  { key: 'bcm_document', label: 'Plan-Dokument (Upload)', type: 'file' },
+  { key: 'bcm_notes', label: 'Anmerkungen', type: 'string/textarea' },
+];
+const AWARENESSSCHULUNGEN_FIELDS = [
+  { key: 'training_title', label: 'Titel der Schulung', type: 'string/text' },
+  { key: 'training_type', label: 'Schulungstyp', type: 'lookup/select', options: [{ key: 'pflicht', label: 'Pflichtschulung' }, { key: 'awareness', label: 'Awareness-Kampagne' }, { key: 'technisch', label: 'Technische Schulung' }, { key: 'fuehrung', label: 'Führungskräfteschulung' }, { key: 'onboarding', label: 'Onboarding' }, { key: 'phishing', label: 'Phishing-Simulation' }, { key: 'sonstiges', label: 'Sonstiges' }] },
+  { key: 'training_target_group', label: 'Zielgruppe', type: 'multiplelookup/checkbox', options: [{ key: 'alle', label: 'Alle Mitarbeiter' }, { key: 'it', label: 'IT-Personal' }, { key: 'fuehrung', label: 'Führungskräfte' }, { key: 'neu', label: 'Neue Mitarbeiter' }, { key: 'admin', label: 'Administratoren' }, { key: 'fach', label: 'Fachverantwortliche' }] },
+  { key: 'training_start_date', label: 'Startdatum', type: 'date/date' },
+  { key: 'training_end_date', label: 'Enddatum', type: 'date/date' },
+  { key: 'training_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
+  { key: 'training_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
+  { key: 'training_participants_count', label: 'Anzahl Teilnehmer (geplant)', type: 'number' },
+  { key: 'training_completion_rate', label: 'Abschlussquote (%)', type: 'number' },
+  { key: 'training_status', label: 'Status', type: 'lookup/select', options: [{ key: 'geplant', label: 'Geplant' }, { key: 'aktiv', label: 'Aktiv' }, { key: 'abgeschlossen', label: 'Abgeschlossen' }, { key: 'abgebrochen', label: 'Abgebrochen' }] },
+  { key: 'training_framework', label: 'Zugehöriges Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
+  { key: 'training_material', label: 'Schulungsmaterial (Upload)', type: 'file' },
+  { key: 'training_notes', label: 'Anmerkungen', type: 'string/textarea' },
+];
+const AUFGABENFREIGABEN_FIELDS = [
+  { key: 'task_title', label: 'Aufgabentitel', type: 'string/text' },
+  { key: 'task_type', label: 'Aufgabentyp', type: 'lookup/select', options: [{ key: 'aufgabe', label: 'Aufgabe' }, { key: 'freigabe', label: 'Freigabeanfrage' }, { key: 'review', label: 'Review' }, { key: 'eskalation', label: 'Eskalation' }, { key: 'erinnerung', label: 'Erinnerung' }] },
+  { key: 'task_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'task_priority', label: 'Priorität', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }] },
+  { key: 'task_assignee_firstname', label: 'Zugewiesen an (Vorname)', type: 'string/text' },
+  { key: 'task_assignee_lastname', label: 'Zugewiesen an (Nachname)', type: 'string/text' },
+  { key: 'task_assignee_email', label: 'Zugewiesen an (E-Mail)', type: 'string/email' },
+  { key: 'task_requester_firstname', label: 'Anforderer Vorname', type: 'string/text' },
+  { key: 'task_requester_lastname', label: 'Anforderer Nachname', type: 'string/text' },
+  { key: 'task_due_date', label: 'Fälligkeitsdatum', type: 'date/date' },
+  { key: 'task_related_risk', label: 'Zugehöriges Risiko', type: 'applookup/select', targetEntity: 'risikomanagement', targetAppId: 'RISIKOMANAGEMENT', displayField: 'risk_owner_firstname' },
+  { key: 'task_related_measure', label: 'Zugehörige Maßnahme', type: 'applookup/select', targetEntity: 'maßnahmen_management', targetAppId: 'MASSNAHMEN_MANAGEMENT', displayField: 'measure_id' },
+  { key: 'task_related_audit', label: 'Zugehöriges Audit', type: 'applookup/select', targetEntity: 'audit_management', targetAppId: 'AUDIT_MANAGEMENT', displayField: 'audit_id' },
+  { key: 'task_status', label: 'Status', type: 'lookup/select', options: [{ key: 'offen', label: 'Offen' }, { key: 'in_bearbeitung', label: 'In Bearbeitung' }, { key: 'warte_freigabe', label: 'Warte auf Freigabe' }, { key: 'freigegeben', label: 'Freigegeben' }, { key: 'abgelehnt', label: 'Abgelehnt' }, { key: 'erledigt', label: 'Erledigt' }, { key: 'abgebrochen', label: 'Abgebrochen' }] },
+  { key: 'task_approval_comment', label: 'Freigabe-/Ablehnungskommentar', type: 'string/textarea' },
+  { key: 'task_attachment', label: 'Anhang', type: 'file' },
+];
+const ORGANISATIONSEINHEITEN_FIELDS = [
+  { key: 'org_housenumber', label: 'Hausnummer', type: 'string/text' },
+  { key: 'org_postal', label: 'Postleitzahl', type: 'string/text' },
+  { key: 'org_city', label: 'Stadt', type: 'string/text' },
+  { key: 'org_country', label: 'Land', type: 'string/text' },
+  { key: 'org_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
+  { key: 'org_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
+  { key: 'org_responsible_email', label: 'E-Mail Verantwortlicher', type: 'string/email' },
+  { key: 'org_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'org_active', label: 'Aktiv', type: 'bool' },
+  { key: 'org_name', label: 'Name der Organisationseinheit', type: 'string/text' },
+  { key: 'org_type', label: 'Typ', type: 'lookup/select', options: [{ key: 'abteilung', label: 'Abteilung' }, { key: 'bereich', label: 'Bereich' }, { key: 'standort', label: 'Standort' }, { key: 'tochtergesellschaft', label: 'Tochtergesellschaft' }, { key: 'konzerngesellschaft', label: 'Konzerngesellschaft' }] },
+  { key: 'org_parent', label: 'Übergeordnete Einheit', type: 'string/text' },
+  { key: 'org_street', label: 'Straße', type: 'string/text' },
+];
+const ASSETREGISTER_FIELDS = [
+  { key: 'asset_name', label: 'Asset-Bezeichnung', type: 'string/text' },
+  { key: 'asset_id_intern', label: 'Interne Asset-ID', type: 'string/text' },
+  { key: 'asset_category', label: 'Asset-Kategorie', type: 'lookup/select', options: [{ key: 'hardware', label: 'Hardware' }, { key: 'software', label: 'Software' }, { key: 'daten', label: 'Daten / Information' }, { key: 'dienst', label: 'Dienst / Service' }, { key: 'prozess', label: 'Prozess' }, { key: 'person', label: 'Person / Rolle' }, { key: 'gebaeude', label: 'Gebäude / Infrastruktur' }, { key: 'lieferant', label: 'Lieferant / Drittpartei' }] },
+  { key: 'asset_type', label: 'Asset-Typ', type: 'string/text' },
+  { key: 'asset_owner_firstname', label: 'Asset-Owner Vorname', type: 'string/text' },
+  { key: 'asset_owner_lastname', label: 'Asset-Owner Nachname', type: 'string/text' },
+  { key: 'asset_owner_email', label: 'Asset-Owner E-Mail', type: 'string/email' },
+  { key: 'asset_classification', label: 'Schutzbedarfsklasse', type: 'lookup/select', options: [{ key: 'normal', label: 'Normal' }, { key: 'hoch', label: 'Hoch' }, { key: 'sehr_hoch', label: 'Sehr hoch' }] },
+  { key: 'asset_confidentiality', label: 'Vertraulichkeit', type: 'lookup/radio', options: [{ key: 'oeffentlich', label: 'Öffentlich' }, { key: 'intern', label: 'Intern' }, { key: 'vertraulich', label: 'Vertraulich' }, { key: 'streng_vertraulich', label: 'Streng vertraulich' }] },
+  { key: 'asset_integrity', label: 'Integrität', type: 'lookup/radio', options: [{ key: 'normal', label: 'Normal' }, { key: 'hoch', label: 'Hoch' }, { key: 'sehr_hoch', label: 'Sehr hoch' }] },
+  { key: 'asset_availability', label: 'Verfügbarkeit', type: 'lookup/radio', options: [{ key: 'normal', label: 'Normal' }, { key: 'hoch', label: 'Hoch' }, { key: 'sehr_hoch', label: 'Sehr hoch' }] },
+  { key: 'asset_location', label: 'Standort / Betriebsort', type: 'string/text' },
+  { key: 'asset_org_unit', label: 'Organisationseinheit', type: 'applookup/select', targetEntity: 'organisationseinheiten', targetAppId: 'ORGANISATIONSEINHEITEN', displayField: 'org_housenumber' },
+  { key: 'asset_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'asset_status', label: 'Status', type: 'lookup/select', options: [{ key: 'in_betrieb', label: 'In Betrieb' }, { key: 'in_planung', label: 'In Planung' }, { key: 'ausser_betrieb', label: 'Außer Betrieb' }, { key: 'archiviert', label: 'Archiviert' }] },
+  { key: 'asset_purchase_date', label: 'Anschaffungsdatum', type: 'date/date' },
+  { key: 'asset_review_date', label: 'Nächstes Review-Datum', type: 'date/date' },
+];
+const FRAMEWORKVERWALTUNG_FIELDS = [
+  { key: 'fw_name', label: 'Framework-Name', type: 'string/text' },
+  { key: 'fw_type', label: 'Framework-Typ', type: 'lookup/select', options: [{ key: 'iso27001', label: 'ISO/IEC 27001' }, { key: 'nis2', label: 'NIS2' }, { key: 'dora', label: 'DORA' }, { key: 'bsi', label: 'BSI IT-Grundschutz' }, { key: 'soc2', label: 'SOC 2' }, { key: 'sonstiges', label: 'Sonstiges' }] },
+  { key: 'fw_version', label: 'Version / Jahr', type: 'string/text' },
+  { key: 'fw_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'req_id', label: 'Anforderungs-ID', type: 'string/text' },
+  { key: 'req_title', label: 'Anforderungstitel', type: 'string/text' },
+  { key: 'req_description', label: 'Anforderungstext', type: 'string/textarea' },
+  { key: 'req_domain', label: 'Domäne / Kapitel', type: 'string/text' },
+  { key: 'req_mandatory', label: 'Verpflichtend', type: 'bool' },
+  { key: 'fw_active', label: 'Framework aktiv', type: 'bool' },
+];
 const RISIKOMANAGEMENT_FIELDS = [
   { key: 'risk_description', label: 'Risikobeschreibung', type: 'string/textarea' },
   { key: 'risk_category', label: 'Risikokategorie', type: 'multiplelookup/checkbox', options: [{ key: 'infosec', label: 'Informationssicherheit' }, { key: 'datenschutz', label: 'Datenschutz' }, { key: 'betrieb', label: 'Betriebsrisiko' }, { key: 'compliance', label: 'Compliance' }, { key: 'drittpartei', label: 'Drittpartei / Lieferant' }, { key: 'physisch', label: 'Physische Sicherheit' }, { key: 'personal', label: 'Personalrisiko' }, { key: 'sonstiges', label: 'Sonstiges' }] },
@@ -80,20 +174,36 @@ const RISIKOMANAGEMENT_FIELDS = [
   { key: 'risk_status', label: 'Status', type: 'lookup/select', options: [{ key: 'offen', label: 'Offen' }, { key: 'in_behandlung', label: 'In Behandlung' }, { key: 'akzeptiert', label: 'Akzeptiert' }, { key: 'geschlossen', label: 'Geschlossen' }] },
   { key: 'risk_notes', label: 'Anmerkungen', type: 'string/textarea' },
 ];
-const ORGANISATIONSEINHEITEN_FIELDS = [
-  { key: 'org_housenumber', label: 'Hausnummer', type: 'string/text' },
-  { key: 'org_postal', label: 'Postleitzahl', type: 'string/text' },
-  { key: 'org_city', label: 'Stadt', type: 'string/text' },
-  { key: 'org_country', label: 'Land', type: 'string/text' },
-  { key: 'org_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
-  { key: 'org_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
-  { key: 'org_responsible_email', label: 'E-Mail Verantwortlicher', type: 'string/email' },
-  { key: 'org_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'org_active', label: 'Aktiv', type: 'bool' },
-  { key: 'org_name', label: 'Name der Organisationseinheit', type: 'string/text' },
-  { key: 'org_type', label: 'Typ', type: 'lookup/select', options: [{ key: 'abteilung', label: 'Abteilung' }, { key: 'bereich', label: 'Bereich' }, { key: 'standort', label: 'Standort' }, { key: 'tochtergesellschaft', label: 'Tochtergesellschaft' }, { key: 'konzerngesellschaft', label: 'Konzerngesellschaft' }] },
-  { key: 'org_parent', label: 'Übergeordnete Einheit', type: 'string/text' },
-  { key: 'org_street', label: 'Straße', type: 'string/text' },
+const MASSNAHMENMANAGEMENT_FIELDS = [
+  { key: 'measure_id', label: 'Maßnahmen-ID', type: 'string/text' },
+  { key: 'measure_title', label: 'Maßnahmentitel', type: 'string/text' },
+  { key: 'measure_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'measure_type', label: 'Maßnahmentyp', type: 'lookup/select', options: [{ key: 'technisch', label: 'Technisch' }, { key: 'organisatorisch', label: 'Organisatorisch' }, { key: 'personell', label: 'Personell' }, { key: 'physisch', label: 'Physisch' }, { key: 'rechtlich', label: 'Rechtlich / Vertraglich' }] },
+  { key: 'measure_priority', label: 'Priorität', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }] },
+  { key: 'measure_risk', label: 'Zugehöriges Risiko', type: 'applookup/select', targetEntity: 'risikomanagement', targetAppId: 'RISIKOMANAGEMENT', displayField: 'risk_owner_firstname' },
+  { key: 'measure_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
+  { key: 'measure_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
+  { key: 'measure_responsible_email', label: 'Verantwortlicher E-Mail', type: 'string/email' },
+  { key: 'measure_due_date', label: 'Fälligkeitsdatum', type: 'date/date' },
+  { key: 'measure_completion_date', label: 'Umsetzungsdatum (tatsächlich)', type: 'date/date' },
+  { key: 'measure_status', label: 'Umsetzungsstatus', type: 'lookup/select', options: [{ key: 'geplant', label: 'Geplant' }, { key: 'in_umsetzung', label: 'In Umsetzung' }, { key: 'umgesetzt', label: 'Umgesetzt' }, { key: 'nicht_umgesetzt', label: 'Nicht umgesetzt' }, { key: 'entfaellt', label: 'Entfällt' }] },
+  { key: 'measure_effectiveness', label: 'Wirksamkeit', type: 'lookup/radio', options: [{ key: 'nicht_bewertet', label: 'Nicht bewertet' }, { key: 'wirksam', label: 'Wirksam' }, { key: 'teilweise_wirksam', label: 'Teilweise wirksam' }, { key: 'nicht_wirksam', label: 'Nicht wirksam' }] },
+  { key: 'measure_evidence', label: 'Nachweis / Evidenz', type: 'file' },
+  { key: 'measure_notes', label: 'Anmerkungen', type: 'string/textarea' },
+];
+const KONTROLLMANAGEMENT_FIELDS = [
+  { key: 'ctrl_id', label: 'Kontroll-ID', type: 'string/text' },
+  { key: 'ctrl_title', label: 'Kontrolltitel', type: 'string/text' },
+  { key: 'ctrl_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'ctrl_type', label: 'Kontrolltyp', type: 'lookup/select', options: [{ key: 'praeventiv', label: 'Präventiv' }, { key: 'detektiv', label: 'Detektiv' }, { key: 'korrektiv', label: 'Korrektiv' }, { key: 'direktiv', label: 'Direktiv' }] },
+  { key: 'ctrl_domain', label: 'Kontrolldomäne', type: 'string/text' },
+  { key: 'ctrl_framework', label: 'Primäres Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
+  { key: 'ctrl_owner_firstname', label: 'Kontrollverantwortlicher Vorname', type: 'string/text' },
+  { key: 'ctrl_owner_lastname', label: 'Kontrollverantwortlicher Nachname', type: 'string/text' },
+  { key: 'ctrl_implementation_status', label: 'Implementierungsstatus', type: 'lookup/select', options: [{ key: 'nicht_implementiert', label: 'Nicht implementiert' }, { key: 'in_umsetzung', label: 'In Umsetzung' }, { key: 'teilweise_implementiert', label: 'Teilweise implementiert' }, { key: 'vollstaendig_implementiert', label: 'Vollständig implementiert' }] },
+  { key: 'ctrl_review_date', label: 'Nächstes Review-Datum', type: 'date/date' },
+  { key: 'ctrl_measure', label: 'Zugehörige Maßnahme', type: 'applookup/select', targetEntity: 'maßnahmen_management', targetAppId: 'MASSNAHMEN_MANAGEMENT', displayField: 'measure_id' },
+  { key: 'ctrl_notes', label: 'Anmerkungen', type: 'string/textarea' },
 ];
 const SOAMANAGEMENT_FIELDS = [
   { key: 'soa_control', label: 'Kontrolle (Control)', type: 'applookup/select', targetEntity: 'kontroll_management', targetAppId: 'KONTROLL_MANAGEMENT', displayField: 'ctrl_id' },
@@ -106,6 +216,58 @@ const SOAMANAGEMENT_FIELDS = [
   { key: 'soa_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
   { key: 'soa_review_date', label: 'Review-Datum', type: 'date/date' },
   { key: 'soa_notes', label: 'Anmerkungen', type: 'string/textarea' },
+];
+const AUDITMANAGEMENT_FIELDS = [
+  { key: 'audit_framework', label: 'Auditiertes Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
+  { key: 'audit_scope', label: 'Auditumfang / Scope', type: 'string/textarea' },
+  { key: 'audit_start_date', label: 'Auditbeginn', type: 'date/date' },
+  { key: 'audit_end_date', label: 'Auditende', type: 'date/date' },
+  { key: 'audit_lead_firstname', label: 'Leitender Auditor Vorname', type: 'string/text' },
+  { key: 'audit_lead_lastname', label: 'Leitender Auditor Nachname', type: 'string/text' },
+  { key: 'audit_lead_email', label: 'Leitender Auditor E-Mail', type: 'string/email' },
+  { key: 'audit_org_unit', label: 'Auditierte Organisationseinheit', type: 'applookup/select', targetEntity: 'organisationseinheiten', targetAppId: 'ORGANISATIONSEINHEITEN', displayField: 'org_housenumber' },
+  { key: 'audit_status', label: 'Auditstatus', type: 'lookup/select', options: [{ key: 'geplant', label: 'Geplant' }, { key: 'in_durchfuehrung', label: 'In Durchführung' }, { key: 'abgebrochen', label: 'Abgebrochen' }, { key: 'abgeschlossen', label: 'Abgeschlossen' }] },
+  { key: 'audit_result', label: 'Auditergebnis', type: 'lookup/radio', options: [{ key: 'bestanden', label: 'Bestanden' }, { key: 'bestanden_auflagen', label: 'Bestanden mit Auflagen' }, { key: 'nicht_bestanden', label: 'Nicht bestanden' }, { key: 'ausstehend', label: 'Ausstehend' }] },
+  { key: 'audit_report', label: 'Auditbericht (Upload)', type: 'file' },
+  { key: 'audit_notes', label: 'Anmerkungen', type: 'string/textarea' },
+  { key: 'audit_id', label: 'Audit-ID', type: 'string/text' },
+  { key: 'audit_title', label: 'Audittitel', type: 'string/text' },
+  { key: 'audit_type', label: 'Audittyp', type: 'lookup/select', options: [{ key: 'intern', label: 'Internes Audit' }, { key: 'extern', label: 'Externes Audit' }, { key: 'zertifizierung', label: 'Zertifizierungsaudit' }, { key: 'ueberwachung', label: 'Überwachungsaudit' }, { key: 'lieferant', label: 'Lieferantenaudit' }, { key: 'behoerde', label: 'Behördenaudit' }] },
+];
+const FINDINGSABWEICHUNGEN_FIELDS = [
+  { key: 'finding_id', label: 'Finding-ID', type: 'string/text' },
+  { key: 'finding_title', label: 'Bezeichnung', type: 'string/text' },
+  { key: 'finding_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'finding_type', label: 'Finding-Typ', type: 'lookup/select', options: [{ key: 'nc_major', label: 'Nichtkonformität (Major)' }, { key: 'nc_minor', label: 'Nichtkonformität (Minor)' }, { key: 'beobachtung', label: 'Beobachtung' }, { key: 'verbesserung', label: 'Verbesserungspotenzial' }, { key: 'positiv', label: 'Positiver Befund' }] },
+  { key: 'finding_audit', label: 'Zugehöriges Audit', type: 'applookup/select', targetEntity: 'audit_management', targetAppId: 'AUDIT_MANAGEMENT', displayField: 'audit_id' },
+  { key: 'finding_control', label: 'Betroffene Kontrolle', type: 'applookup/select', targetEntity: 'kontroll_management', targetAppId: 'KONTROLL_MANAGEMENT', displayField: 'ctrl_id' },
+  { key: 'finding_severity', label: 'Schweregrad', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }, { key: 'informativ', label: 'Informativ' }] },
+  { key: 'finding_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
+  { key: 'finding_due_date', label: 'Behebungsfrist', type: 'date/date' },
+  { key: 'finding_status', label: 'Status', type: 'lookup/select', options: [{ key: 'offen', label: 'Offen' }, { key: 'in_bearbeitung', label: 'In Bearbeitung' }, { key: 'behoben', label: 'Behoben' }, { key: 'akzeptiert', label: 'Akzeptiert' }, { key: 'geschlossen', label: 'Geschlossen' }] },
+  { key: 'finding_measure', label: 'Zugehörige Maßnahme', type: 'applookup/select', targetEntity: 'maßnahmen_management', targetAppId: 'MASSNAHMEN_MANAGEMENT', displayField: 'measure_id' },
+  { key: 'finding_evidence', label: 'Nachweis / Evidenz', type: 'file' },
+  { key: 'finding_notes', label: 'Anmerkungen', type: 'string/textarea' },
+  { key: 'finding_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
+];
+const INCIDENTMANAGEMENT_FIELDS = [
+  { key: 'incident_id', label: 'Vorfalls-ID', type: 'string/text' },
+  { key: 'incident_title', label: 'Vorfallsbezeichnung', type: 'string/text' },
+  { key: 'incident_description', label: 'Vorfallsbeschreibung', type: 'string/textarea' },
+  { key: 'incident_category', label: 'Vorfallskategorie', type: 'lookup/select', options: [{ key: 'malware', label: 'Malware / Ransomware' }, { key: 'phishing', label: 'Phishing / Social Engineering' }, { key: 'datenpanne', label: 'Datenpanne / Datenleck' }, { key: 'unbefugter_zugriff', label: 'Unbefugter Zugriff' }, { key: 'dos', label: 'Denial of Service' }, { key: 'physisch', label: 'Physischer Einbruch' }, { key: 'systemausfall', label: 'Systemausfall' }, { key: 'insider', label: 'Insider-Bedrohung' }, { key: 'sonstiges', label: 'Sonstiges' }] },
+  { key: 'incident_severity', label: 'Schweregrad', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }] },
+  { key: 'incident_detected_at', label: 'Erkennungszeitpunkt', type: 'date/datetimeminute' },
+  { key: 'incident_occurred_at', label: 'Eintrittszeitpunkt (geschätzt)', type: 'date/datetimeminute' },
+  { key: 'incident_reporter_firstname', label: 'Melder Vorname', type: 'string/text' },
+  { key: 'incident_reporter_lastname', label: 'Melder Nachname', type: 'string/text' },
+  { key: 'incident_reporter_email', label: 'Melder E-Mail', type: 'string/email' },
+  { key: 'incident_affected_asset', label: 'Betroffenes Asset', type: 'multipleapplookup/select', targetEntity: 'asset_register', targetAppId: 'ASSET_REGISTER', displayField: 'asset_name' },
+  { key: 'incident_affected_org', label: 'Betroffene Organisationseinheit', type: 'applookup/select', targetEntity: 'organisationseinheiten', targetAppId: 'ORGANISATIONSEINHEITEN', displayField: 'org_housenumber' },
+  { key: 'incident_nis2_reportable', label: 'NIS2-meldepflichtig', type: 'bool' },
+  { key: 'incident_dora_reportable', label: 'DORA-meldepflichtig', type: 'bool' },
+  { key: 'incident_status', label: 'Status', type: 'lookup/select', options: [{ key: 'neu', label: 'Neu gemeldet' }, { key: 'in_bearbeitung', label: 'In Bearbeitung' }, { key: 'eskaliert', label: 'Eskaliert' }, { key: 'behoben', label: 'Behoben' }, { key: 'geschlossen', label: 'Geschlossen' }] },
+  { key: 'incident_evidence', label: 'Screenshot / Nachweis', type: 'file' },
+  { key: 'incident_notes', label: 'Weitere Informationen', type: 'string/textarea' },
 ];
 const LIEFERANTENMANAGEMENT_FIELDS = [
   { key: 'supplier_housenumber', label: 'Hausnummer', type: 'string/text' },
@@ -130,183 +292,6 @@ const LIEFERANTENMANAGEMENT_FIELDS = [
   { key: 'supplier_contact_tel', label: 'Ansprechpartner Telefon', type: 'string/tel' },
   { key: 'supplier_street', label: 'Straße', type: 'string/text' },
 ];
-const DOKUMENTEEVIDENZEN_FIELDS = [
-  { key: 'doc_title', label: 'Dokumententitel', type: 'string/text' },
-  { key: 'doc_type', label: 'Dokumententyp', type: 'lookup/select', options: [{ key: 'richtlinie', label: 'Richtlinie' }, { key: 'verfahren', label: 'Verfahrensanweisung' }, { key: 'evidenz', label: 'Nachweis / Evidenz' }, { key: 'auditbericht', label: 'Auditbericht' }, { key: 'risikoanalyse', label: 'Risikoanalyse' }, { key: 'vertrag', label: 'Vertrag' }, { key: 'zertifikat', label: 'Zertifikat' }, { key: 'protokoll', label: 'Protokoll' }, { key: 'sonstiges', label: 'Sonstiges' }] },
-  { key: 'doc_version', label: 'Version', type: 'string/text' },
-  { key: 'doc_status', label: 'Status', type: 'lookup/select', options: [{ key: 'entwurf', label: 'Entwurf' }, { key: 'in_review', label: 'In Review' }, { key: 'freigegeben', label: 'Freigegeben' }, { key: 'archiviert', label: 'Archiviert' }] },
-  { key: 'doc_owner_firstname', label: 'Dokumentenverantwortlicher Vorname', type: 'string/text' },
-  { key: 'doc_owner_lastname', label: 'Dokumentenverantwortlicher Nachname', type: 'string/text' },
-  { key: 'doc_valid_from', label: 'Gültig ab', type: 'date/date' },
-  { key: 'doc_valid_until', label: 'Gültig bis', type: 'date/date' },
-  { key: 'doc_related_control', label: 'Zugehörige Kontrolle', type: 'applookup/select', targetEntity: 'kontroll_management', targetAppId: 'KONTROLL_MANAGEMENT', displayField: 'ctrl_id' },
-  { key: 'doc_related_audit', label: 'Zugehöriges Audit', type: 'applookup/select', targetEntity: 'audit_management', targetAppId: 'AUDIT_MANAGEMENT', displayField: 'audit_id' },
-  { key: 'doc_file', label: 'Datei (Upload)', type: 'file' },
-  { key: 'doc_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'doc_tags', label: 'Schlagwörter / Tags', type: 'string/text' },
-];
-const FRAMEWORKVERWALTUNG_FIELDS = [
-  { key: 'fw_name', label: 'Framework-Name', type: 'string/text' },
-  { key: 'fw_type', label: 'Framework-Typ', type: 'lookup/select', options: [{ key: 'iso27001', label: 'ISO/IEC 27001' }, { key: 'nis2', label: 'NIS2' }, { key: 'dora', label: 'DORA' }, { key: 'bsi', label: 'BSI IT-Grundschutz' }, { key: 'soc2', label: 'SOC 2' }, { key: 'sonstiges', label: 'Sonstiges' }] },
-  { key: 'fw_version', label: 'Version / Jahr', type: 'string/text' },
-  { key: 'fw_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'req_id', label: 'Anforderungs-ID', type: 'string/text' },
-  { key: 'req_title', label: 'Anforderungstitel', type: 'string/text' },
-  { key: 'req_description', label: 'Anforderungstext', type: 'string/textarea' },
-  { key: 'req_domain', label: 'Domäne / Kapitel', type: 'string/text' },
-  { key: 'req_mandatory', label: 'Verpflichtend', type: 'bool' },
-  { key: 'fw_active', label: 'Framework aktiv', type: 'bool' },
-];
-const FINDINGSABWEICHUNGEN_FIELDS = [
-  { key: 'finding_id', label: 'Finding-ID', type: 'string/text' },
-  { key: 'finding_title', label: 'Bezeichnung', type: 'string/text' },
-  { key: 'finding_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'finding_type', label: 'Finding-Typ', type: 'lookup/select', options: [{ key: 'nc_major', label: 'Nichtkonformität (Major)' }, { key: 'nc_minor', label: 'Nichtkonformität (Minor)' }, { key: 'beobachtung', label: 'Beobachtung' }, { key: 'verbesserung', label: 'Verbesserungspotenzial' }, { key: 'positiv', label: 'Positiver Befund' }] },
-  { key: 'finding_audit', label: 'Zugehöriges Audit', type: 'applookup/select', targetEntity: 'audit_management', targetAppId: 'AUDIT_MANAGEMENT', displayField: 'audit_id' },
-  { key: 'finding_control', label: 'Betroffene Kontrolle', type: 'applookup/select', targetEntity: 'kontroll_management', targetAppId: 'KONTROLL_MANAGEMENT', displayField: 'ctrl_id' },
-  { key: 'finding_severity', label: 'Schweregrad', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }, { key: 'informativ', label: 'Informativ' }] },
-  { key: 'finding_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
-  { key: 'finding_due_date', label: 'Behebungsfrist', type: 'date/date' },
-  { key: 'finding_status', label: 'Status', type: 'lookup/select', options: [{ key: 'offen', label: 'Offen' }, { key: 'in_bearbeitung', label: 'In Bearbeitung' }, { key: 'behoben', label: 'Behoben' }, { key: 'akzeptiert', label: 'Akzeptiert' }, { key: 'geschlossen', label: 'Geschlossen' }] },
-  { key: 'finding_measure', label: 'Zugehörige Maßnahme', type: 'applookup/select', targetEntity: 'maßnahmen_management', targetAppId: 'MASSNAHMEN_MANAGEMENT', displayField: 'measure_id' },
-  { key: 'finding_evidence', label: 'Nachweis / Evidenz', type: 'file' },
-  { key: 'finding_notes', label: 'Anmerkungen', type: 'string/textarea' },
-  { key: 'finding_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
-];
-const KONTROLLMANAGEMENT_FIELDS = [
-  { key: 'ctrl_id', label: 'Kontroll-ID', type: 'string/text' },
-  { key: 'ctrl_title', label: 'Kontrolltitel', type: 'string/text' },
-  { key: 'ctrl_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'ctrl_type', label: 'Kontrolltyp', type: 'lookup/select', options: [{ key: 'praeventiv', label: 'Präventiv' }, { key: 'detektiv', label: 'Detektiv' }, { key: 'korrektiv', label: 'Korrektiv' }, { key: 'direktiv', label: 'Direktiv' }] },
-  { key: 'ctrl_domain', label: 'Kontrolldomäne', type: 'string/text' },
-  { key: 'ctrl_framework', label: 'Primäres Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
-  { key: 'ctrl_owner_firstname', label: 'Kontrollverantwortlicher Vorname', type: 'string/text' },
-  { key: 'ctrl_owner_lastname', label: 'Kontrollverantwortlicher Nachname', type: 'string/text' },
-  { key: 'ctrl_implementation_status', label: 'Implementierungsstatus', type: 'lookup/select', options: [{ key: 'nicht_implementiert', label: 'Nicht implementiert' }, { key: 'in_umsetzung', label: 'In Umsetzung' }, { key: 'teilweise_implementiert', label: 'Teilweise implementiert' }, { key: 'vollstaendig_implementiert', label: 'Vollständig implementiert' }] },
-  { key: 'ctrl_review_date', label: 'Nächstes Review-Datum', type: 'date/date' },
-  { key: 'ctrl_measure', label: 'Zugehörige Maßnahme', type: 'applookup/select', targetEntity: 'maßnahmen_management', targetAppId: 'MASSNAHMEN_MANAGEMENT', displayField: 'measure_id' },
-  { key: 'ctrl_notes', label: 'Anmerkungen', type: 'string/textarea' },
-];
-const AUDITMANAGEMENT_FIELDS = [
-  { key: 'audit_framework', label: 'Auditiertes Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
-  { key: 'audit_scope', label: 'Auditumfang / Scope', type: 'string/textarea' },
-  { key: 'audit_start_date', label: 'Auditbeginn', type: 'date/date' },
-  { key: 'audit_end_date', label: 'Auditende', type: 'date/date' },
-  { key: 'audit_lead_firstname', label: 'Leitender Auditor Vorname', type: 'string/text' },
-  { key: 'audit_lead_lastname', label: 'Leitender Auditor Nachname', type: 'string/text' },
-  { key: 'audit_lead_email', label: 'Leitender Auditor E-Mail', type: 'string/email' },
-  { key: 'audit_org_unit', label: 'Auditierte Organisationseinheit', type: 'applookup/select', targetEntity: 'organisationseinheiten', targetAppId: 'ORGANISATIONSEINHEITEN', displayField: 'org_housenumber' },
-  { key: 'audit_status', label: 'Auditstatus', type: 'lookup/select', options: [{ key: 'geplant', label: 'Geplant' }, { key: 'in_durchfuehrung', label: 'In Durchführung' }, { key: 'abgebrochen', label: 'Abgebrochen' }, { key: 'abgeschlossen', label: 'Abgeschlossen' }] },
-  { key: 'audit_result', label: 'Auditergebnis', type: 'lookup/radio', options: [{ key: 'bestanden', label: 'Bestanden' }, { key: 'bestanden_auflagen', label: 'Bestanden mit Auflagen' }, { key: 'nicht_bestanden', label: 'Nicht bestanden' }, { key: 'ausstehend', label: 'Ausstehend' }] },
-  { key: 'audit_report', label: 'Auditbericht (Upload)', type: 'file' },
-  { key: 'audit_notes', label: 'Anmerkungen', type: 'string/textarea' },
-  { key: 'audit_id', label: 'Audit-ID', type: 'string/text' },
-  { key: 'audit_title', label: 'Audittitel', type: 'string/text' },
-  { key: 'audit_type', label: 'Audittyp', type: 'lookup/select', options: [{ key: 'intern', label: 'Internes Audit' }, { key: 'extern', label: 'Externes Audit' }, { key: 'zertifizierung', label: 'Zertifizierungsaudit' }, { key: 'ueberwachung', label: 'Überwachungsaudit' }, { key: 'lieferant', label: 'Lieferantenaudit' }, { key: 'behoerde', label: 'Behördenaudit' }] },
-];
-const BCMNOTFALLMANAGEMENT_FIELDS = [
-  { key: 'bcm_title', label: 'Bezeichnung', type: 'string/text' },
-  { key: 'bcm_type', label: 'Typ', type: 'lookup/select', options: [{ key: 'bcp', label: 'Business Continuity Plan (BCP)' }, { key: 'drp', label: 'Disaster Recovery Plan (DRP)' }, { key: 'bia', label: 'Business Impact Analyse (BIA)' }, { key: 'uebung', label: 'Notfallübung' }, { key: 'prozess', label: 'Kritischer Prozess' }, { key: 'sonstiges', label: 'Sonstiges' }] },
-  { key: 'bcm_scope', label: 'Geltungsbereich', type: 'string/textarea' },
-  { key: 'bcm_rto', label: 'Recovery Time Objective (RTO)', type: 'string/text' },
-  { key: 'bcm_rpo', label: 'Recovery Point Objective (RPO)', type: 'string/text' },
-  { key: 'bcm_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
-  { key: 'bcm_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
-  { key: 'bcm_related_asset', label: 'Kritisches Asset', type: 'applookup/select', targetEntity: 'asset_register', targetAppId: 'ASSET_REGISTER', displayField: 'asset_name' },
-  { key: 'bcm_last_test_date', label: 'Letzter Test / Übung', type: 'date/date' },
-  { key: 'bcm_next_test_date', label: 'Nächster Test / Übung', type: 'date/date' },
-  { key: 'bcm_status', label: 'Status', type: 'lookup/select', options: [{ key: 'entwurf', label: 'Entwurf' }, { key: 'freigegeben', label: 'Freigegeben' }, { key: 'in_ueberarbeitung', label: 'In Überarbeitung' }, { key: 'archiviert', label: 'Archiviert' }] },
-  { key: 'bcm_document', label: 'Plan-Dokument (Upload)', type: 'file' },
-  { key: 'bcm_notes', label: 'Anmerkungen', type: 'string/textarea' },
-];
-const AUFGABENFREIGABEN_FIELDS = [
-  { key: 'task_title', label: 'Aufgabentitel', type: 'string/text' },
-  { key: 'task_type', label: 'Aufgabentyp', type: 'lookup/select', options: [{ key: 'aufgabe', label: 'Aufgabe' }, { key: 'freigabe', label: 'Freigabeanfrage' }, { key: 'review', label: 'Review' }, { key: 'eskalation', label: 'Eskalation' }, { key: 'erinnerung', label: 'Erinnerung' }] },
-  { key: 'task_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'task_priority', label: 'Priorität', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }] },
-  { key: 'task_assignee_firstname', label: 'Zugewiesen an (Vorname)', type: 'string/text' },
-  { key: 'task_assignee_lastname', label: 'Zugewiesen an (Nachname)', type: 'string/text' },
-  { key: 'task_assignee_email', label: 'Zugewiesen an (E-Mail)', type: 'string/email' },
-  { key: 'task_requester_firstname', label: 'Anforderer Vorname', type: 'string/text' },
-  { key: 'task_requester_lastname', label: 'Anforderer Nachname', type: 'string/text' },
-  { key: 'task_due_date', label: 'Fälligkeitsdatum', type: 'date/date' },
-  { key: 'task_related_risk', label: 'Zugehöriges Risiko', type: 'applookup/select', targetEntity: 'risikomanagement', targetAppId: 'RISIKOMANAGEMENT', displayField: 'risk_description' },
-  { key: 'task_related_measure', label: 'Zugehörige Maßnahme', type: 'applookup/select', targetEntity: 'maßnahmen_management', targetAppId: 'MASSNAHMEN_MANAGEMENT', displayField: 'measure_id' },
-  { key: 'task_related_audit', label: 'Zugehöriges Audit', type: 'applookup/select', targetEntity: 'audit_management', targetAppId: 'AUDIT_MANAGEMENT', displayField: 'audit_id' },
-  { key: 'task_status', label: 'Status', type: 'lookup/select', options: [{ key: 'offen', label: 'Offen' }, { key: 'in_bearbeitung', label: 'In Bearbeitung' }, { key: 'warte_freigabe', label: 'Warte auf Freigabe' }, { key: 'freigegeben', label: 'Freigegeben' }, { key: 'abgelehnt', label: 'Abgelehnt' }, { key: 'erledigt', label: 'Erledigt' }, { key: 'abgebrochen', label: 'Abgebrochen' }] },
-  { key: 'task_approval_comment', label: 'Freigabe-/Ablehnungskommentar', type: 'string/textarea' },
-  { key: 'task_attachment', label: 'Anhang', type: 'file' },
-];
-const AWARENESSSCHULUNGEN_FIELDS = [
-  { key: 'training_title', label: 'Titel der Schulung', type: 'string/text' },
-  { key: 'training_type', label: 'Schulungstyp', type: 'lookup/select', options: [{ key: 'pflicht', label: 'Pflichtschulung' }, { key: 'awareness', label: 'Awareness-Kampagne' }, { key: 'technisch', label: 'Technische Schulung' }, { key: 'fuehrung', label: 'Führungskräfteschulung' }, { key: 'onboarding', label: 'Onboarding' }, { key: 'phishing', label: 'Phishing-Simulation' }, { key: 'sonstiges', label: 'Sonstiges' }] },
-  { key: 'training_target_group', label: 'Zielgruppe', type: 'multiplelookup/checkbox', options: [{ key: 'alle', label: 'Alle Mitarbeiter' }, { key: 'it', label: 'IT-Personal' }, { key: 'fuehrung', label: 'Führungskräfte' }, { key: 'neu', label: 'Neue Mitarbeiter' }, { key: 'admin', label: 'Administratoren' }, { key: 'fach', label: 'Fachverantwortliche' }] },
-  { key: 'training_start_date', label: 'Startdatum', type: 'date/date' },
-  { key: 'training_end_date', label: 'Enddatum', type: 'date/date' },
-  { key: 'training_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
-  { key: 'training_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
-  { key: 'training_participants_count', label: 'Anzahl Teilnehmer (geplant)', type: 'number' },
-  { key: 'training_completion_rate', label: 'Abschlussquote (%)', type: 'number' },
-  { key: 'training_status', label: 'Status', type: 'lookup/select', options: [{ key: 'geplant', label: 'Geplant' }, { key: 'aktiv', label: 'Aktiv' }, { key: 'abgeschlossen', label: 'Abgeschlossen' }, { key: 'abgebrochen', label: 'Abgebrochen' }] },
-  { key: 'training_framework', label: 'Zugehöriges Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
-  { key: 'training_material', label: 'Schulungsmaterial (Upload)', type: 'file' },
-  { key: 'training_notes', label: 'Anmerkungen', type: 'string/textarea' },
-];
-const MASSNAHMENMANAGEMENT_FIELDS = [
-  { key: 'measure_id', label: 'Maßnahmen-ID', type: 'string/text' },
-  { key: 'measure_title', label: 'Maßnahmentitel', type: 'string/text' },
-  { key: 'measure_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'measure_type', label: 'Maßnahmentyp', type: 'lookup/select', options: [{ key: 'technisch', label: 'Technisch' }, { key: 'organisatorisch', label: 'Organisatorisch' }, { key: 'personell', label: 'Personell' }, { key: 'physisch', label: 'Physisch' }, { key: 'rechtlich', label: 'Rechtlich / Vertraglich' }] },
-  { key: 'measure_priority', label: 'Priorität', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }] },
-  { key: 'measure_risk', label: 'Zugehöriges Risiko', type: 'applookup/select', targetEntity: 'risikomanagement', targetAppId: 'RISIKOMANAGEMENT', displayField: 'risk_description' },
-  { key: 'measure_responsible_firstname', label: 'Verantwortlicher Vorname', type: 'string/text' },
-  { key: 'measure_responsible_lastname', label: 'Verantwortlicher Nachname', type: 'string/text' },
-  { key: 'measure_responsible_email', label: 'Verantwortlicher E-Mail', type: 'string/email' },
-  { key: 'measure_due_date', label: 'Fälligkeitsdatum', type: 'date/date' },
-  { key: 'measure_completion_date', label: 'Umsetzungsdatum (tatsächlich)', type: 'date/date' },
-  { key: 'measure_status', label: 'Umsetzungsstatus', type: 'lookup/select', options: [{ key: 'geplant', label: 'Geplant' }, { key: 'in_umsetzung', label: 'In Umsetzung' }, { key: 'umgesetzt', label: 'Umgesetzt' }, { key: 'nicht_umgesetzt', label: 'Nicht umgesetzt' }, { key: 'entfaellt', label: 'Entfällt' }] },
-  { key: 'measure_effectiveness', label: 'Wirksamkeit', type: 'lookup/radio', options: [{ key: 'nicht_bewertet', label: 'Nicht bewertet' }, { key: 'wirksam', label: 'Wirksam' }, { key: 'teilweise_wirksam', label: 'Teilweise wirksam' }, { key: 'nicht_wirksam', label: 'Nicht wirksam' }] },
-  { key: 'measure_evidence', label: 'Nachweis / Evidenz', type: 'file' },
-  { key: 'measure_notes', label: 'Anmerkungen', type: 'string/textarea' },
-];
-const INCIDENTMANAGEMENT_FIELDS = [
-  { key: 'incident_id', label: 'Vorfalls-ID', type: 'string/text' },
-  { key: 'incident_title', label: 'Vorfallsbezeichnung', type: 'string/text' },
-  { key: 'incident_description', label: 'Vorfallsbeschreibung', type: 'string/textarea' },
-  { key: 'incident_category', label: 'Vorfallskategorie', type: 'lookup/select', options: [{ key: 'malware', label: 'Malware / Ransomware' }, { key: 'phishing', label: 'Phishing / Social Engineering' }, { key: 'datenpanne', label: 'Datenpanne / Datenleck' }, { key: 'unbefugter_zugriff', label: 'Unbefugter Zugriff' }, { key: 'dos', label: 'Denial of Service' }, { key: 'physisch', label: 'Physischer Einbruch' }, { key: 'systemausfall', label: 'Systemausfall' }, { key: 'insider', label: 'Insider-Bedrohung' }, { key: 'sonstiges', label: 'Sonstiges' }] },
-  { key: 'incident_severity', label: 'Schweregrad', type: 'lookup/radio', options: [{ key: 'kritisch', label: 'Kritisch' }, { key: 'hoch', label: 'Hoch' }, { key: 'mittel', label: 'Mittel' }, { key: 'niedrig', label: 'Niedrig' }] },
-  { key: 'incident_detected_at', label: 'Erkennungszeitpunkt', type: 'date/datetimeminute' },
-  { key: 'incident_occurred_at', label: 'Eintrittszeitpunkt (geschätzt)', type: 'date/datetimeminute' },
-  { key: 'incident_reporter_firstname', label: 'Melder Vorname', type: 'string/text' },
-  { key: 'incident_reporter_lastname', label: 'Melder Nachname', type: 'string/text' },
-  { key: 'incident_reporter_email', label: 'Melder E-Mail', type: 'string/email' },
-  { key: 'incident_affected_asset', label: 'Betroffenes Asset', type: 'multipleapplookup/select', targetEntity: 'asset_register', targetAppId: 'ASSET_REGISTER', displayField: 'asset_name' },
-  { key: 'incident_affected_org', label: 'Betroffene Organisationseinheit', type: 'applookup/select', targetEntity: 'organisationseinheiten', targetAppId: 'ORGANISATIONSEINHEITEN', displayField: 'org_housenumber' },
-  { key: 'incident_nis2_reportable', label: 'NIS2-meldepflichtig', type: 'bool' },
-  { key: 'incident_dora_reportable', label: 'DORA-meldepflichtig', type: 'bool' },
-  { key: 'incident_status', label: 'Status', type: 'lookup/select', options: [{ key: 'neu', label: 'Neu gemeldet' }, { key: 'in_bearbeitung', label: 'In Bearbeitung' }, { key: 'eskaliert', label: 'Eskaliert' }, { key: 'behoben', label: 'Behoben' }, { key: 'geschlossen', label: 'Geschlossen' }] },
-  { key: 'incident_evidence', label: 'Screenshot / Nachweis', type: 'file' },
-  { key: 'incident_notes', label: 'Weitere Informationen', type: 'string/textarea' },
-];
-const ASSETREGISTER_FIELDS = [
-  { key: 'asset_name', label: 'Asset-Bezeichnung', type: 'string/text' },
-  { key: 'asset_id_intern', label: 'Interne Asset-ID', type: 'string/text' },
-  { key: 'asset_category', label: 'Asset-Kategorie', type: 'lookup/select', options: [{ key: 'hardware', label: 'Hardware' }, { key: 'software', label: 'Software' }, { key: 'daten', label: 'Daten / Information' }, { key: 'dienst', label: 'Dienst / Service' }, { key: 'prozess', label: 'Prozess' }, { key: 'person', label: 'Person / Rolle' }, { key: 'gebaeude', label: 'Gebäude / Infrastruktur' }, { key: 'lieferant', label: 'Lieferant / Drittpartei' }] },
-  { key: 'asset_type', label: 'Asset-Typ', type: 'string/text' },
-  { key: 'asset_owner_firstname', label: 'Asset-Owner Vorname', type: 'string/text' },
-  { key: 'asset_owner_lastname', label: 'Asset-Owner Nachname', type: 'string/text' },
-  { key: 'asset_owner_email', label: 'Asset-Owner E-Mail', type: 'string/email' },
-  { key: 'asset_classification', label: 'Schutzbedarfsklasse', type: 'lookup/select', options: [{ key: 'normal', label: 'Normal' }, { key: 'hoch', label: 'Hoch' }, { key: 'sehr_hoch', label: 'Sehr hoch' }] },
-  { key: 'asset_confidentiality', label: 'Vertraulichkeit', type: 'lookup/radio', options: [{ key: 'oeffentlich', label: 'Öffentlich' }, { key: 'intern', label: 'Intern' }, { key: 'vertraulich', label: 'Vertraulich' }, { key: 'streng_vertraulich', label: 'Streng vertraulich' }] },
-  { key: 'asset_integrity', label: 'Integrität', type: 'lookup/radio', options: [{ key: 'normal', label: 'Normal' }, { key: 'hoch', label: 'Hoch' }, { key: 'sehr_hoch', label: 'Sehr hoch' }] },
-  { key: 'asset_availability', label: 'Verfügbarkeit', type: 'lookup/radio', options: [{ key: 'normal', label: 'Normal' }, { key: 'hoch', label: 'Hoch' }, { key: 'sehr_hoch', label: 'Sehr hoch' }] },
-  { key: 'asset_location', label: 'Standort / Betriebsort', type: 'string/text' },
-  { key: 'asset_org_unit', label: 'Organisationseinheit', type: 'applookup/select', targetEntity: 'organisationseinheiten', targetAppId: 'ORGANISATIONSEINHEITEN', displayField: 'org_housenumber' },
-  { key: 'asset_description', label: 'Beschreibung', type: 'string/textarea' },
-  { key: 'asset_status', label: 'Status', type: 'lookup/select', options: [{ key: 'in_betrieb', label: 'In Betrieb' }, { key: 'in_planung', label: 'In Planung' }, { key: 'ausser_betrieb', label: 'Außer Betrieb' }, { key: 'archiviert', label: 'Archiviert' }] },
-  { key: 'asset_purchase_date', label: 'Anschaffungsdatum', type: 'date/date' },
-  { key: 'asset_review_date', label: 'Nächstes Review-Datum', type: 'date/date' },
-];
 const POLICYMANAGEMENT_FIELDS = [
   { key: 'policy_id', label: 'Richtlinien-ID', type: 'string/text' },
   { key: 'policy_title', label: 'Titel der Richtlinie', type: 'string/text' },
@@ -325,24 +310,39 @@ const POLICYMANAGEMENT_FIELDS = [
   { key: 'policy_framework', label: 'Zugehöriges Framework', type: 'applookup/select', targetEntity: 'framework_verwaltung', targetAppId: 'FRAMEWORK_VERWALTUNG', displayField: 'fw_name' },
   { key: 'policy_notes', label: 'Anmerkungen', type: 'string/textarea' },
 ];
+const DOKUMENTEEVIDENZEN_FIELDS = [
+  { key: 'doc_title', label: 'Dokumententitel', type: 'string/text' },
+  { key: 'doc_type', label: 'Dokumententyp', type: 'lookup/select', options: [{ key: 'richtlinie', label: 'Richtlinie' }, { key: 'verfahren', label: 'Verfahrensanweisung' }, { key: 'evidenz', label: 'Nachweis / Evidenz' }, { key: 'auditbericht', label: 'Auditbericht' }, { key: 'risikoanalyse', label: 'Risikoanalyse' }, { key: 'vertrag', label: 'Vertrag' }, { key: 'zertifikat', label: 'Zertifikat' }, { key: 'protokoll', label: 'Protokoll' }, { key: 'sonstiges', label: 'Sonstiges' }] },
+  { key: 'doc_version', label: 'Version', type: 'string/text' },
+  { key: 'doc_status', label: 'Status', type: 'lookup/select', options: [{ key: 'entwurf', label: 'Entwurf' }, { key: 'in_review', label: 'In Review' }, { key: 'freigegeben', label: 'Freigegeben' }, { key: 'archiviert', label: 'Archiviert' }] },
+  { key: 'doc_owner_firstname', label: 'Dokumentenverantwortlicher Vorname', type: 'string/text' },
+  { key: 'doc_owner_lastname', label: 'Dokumentenverantwortlicher Nachname', type: 'string/text' },
+  { key: 'doc_valid_from', label: 'Gültig ab', type: 'date/date' },
+  { key: 'doc_valid_until', label: 'Gültig bis', type: 'date/date' },
+  { key: 'doc_related_control', label: 'Zugehörige Kontrolle', type: 'applookup/select', targetEntity: 'kontroll_management', targetAppId: 'KONTROLL_MANAGEMENT', displayField: 'ctrl_id' },
+  { key: 'doc_related_audit', label: 'Zugehöriges Audit', type: 'applookup/select', targetEntity: 'audit_management', targetAppId: 'AUDIT_MANAGEMENT', displayField: 'audit_id' },
+  { key: 'doc_file', label: 'Datei (Upload)', type: 'file' },
+  { key: 'doc_description', label: 'Beschreibung', type: 'string/textarea' },
+  { key: 'doc_tags', label: 'Schlagwörter / Tags', type: 'string/text' },
+];
 
 const ENTITY_TABS = [
-  { key: 'risikomanagement', label: 'Risikomanagement', pascal: 'Risikomanagement' },
+  { key: 'bcm_notfallmanagement', label: 'BCM & Notfallmanagement', pascal: 'BcmNotfallmanagement' },
+  { key: 'awareness_schulungen', label: 'Awareness & Schulungen', pascal: 'AwarenessSchulungen' },
+  { key: 'aufgaben_freigaben', label: 'Aufgaben & Freigaben', pascal: 'AufgabenFreigaben' },
   { key: 'organisationseinheiten', label: 'Organisationseinheiten', pascal: 'Organisationseinheiten' },
-  { key: 'soa_management', label: 'SoA-Management', pascal: 'SoaManagement' },
-  { key: 'lieferantenmanagement', label: 'Lieferantenmanagement', pascal: 'Lieferantenmanagement' },
-  { key: 'dokumente_&_evidenzen', label: 'Dokumente & Evidenzen', pascal: 'DokumenteEvidenzen' },
-  { key: 'framework_verwaltung', label: 'Framework-Verwaltung', pascal: 'FrameworkVerwaltung' },
-  { key: 'findings_&_abweichungen', label: 'Findings & Abweichungen', pascal: 'FindingsAbweichungen' },
-  { key: 'kontroll_management', label: 'Kontroll-Management', pascal: 'KontrollManagement' },
-  { key: 'audit_management', label: 'Audit-Management', pascal: 'AuditManagement' },
-  { key: 'bcm_&_notfallmanagement', label: 'BCM & Notfallmanagement', pascal: 'BcmNotfallmanagement' },
-  { key: 'aufgaben_&_freigaben', label: 'Aufgaben & Freigaben', pascal: 'AufgabenFreigaben' },
-  { key: 'awareness_&_schulungen', label: 'Awareness & Schulungen', pascal: 'AwarenessSchulungen' },
-  { key: 'maßnahmen_management', label: 'Maßnahmen-Management', pascal: 'MassnahmenManagement' },
-  { key: 'incident_management', label: 'Incident-Management', pascal: 'IncidentManagement' },
   { key: 'asset_register', label: 'Asset-Register', pascal: 'AssetRegister' },
+  { key: 'framework_verwaltung', label: 'Framework-Verwaltung', pascal: 'FrameworkVerwaltung' },
+  { key: 'risikomanagement', label: 'Risikomanagement', pascal: 'Risikomanagement' },
+  { key: 'maßnahmen_management', label: 'Maßnahmen-Management', pascal: 'MassnahmenManagement' },
+  { key: 'kontroll_management', label: 'Kontroll-Management', pascal: 'KontrollManagement' },
+  { key: 'soa_management', label: 'SoA-Management', pascal: 'SoaManagement' },
+  { key: 'audit_management', label: 'Audit-Management', pascal: 'AuditManagement' },
+  { key: 'findings_abweichungen', label: 'Findings & Abweichungen', pascal: 'FindingsAbweichungen' },
+  { key: 'incident_management', label: 'Incident-Management', pascal: 'IncidentManagement' },
+  { key: 'lieferantenmanagement', label: 'Lieferantenmanagement', pascal: 'Lieferantenmanagement' },
   { key: 'policy_management', label: 'Policy-Management', pascal: 'PolicyManagement' },
+  { key: 'dokumente_evidenzen', label: 'Dokumente & Evidenzen', pascal: 'DokumenteEvidenzen' },
 ] as const;
 
 type EntityKey = typeof ENTITY_TABS[number]['key'];
@@ -351,42 +351,42 @@ export default function AdminPage() {
   const data = useDashboardData();
   const { loading, error, fetchAll } = data;
 
-  const [activeTab, setActiveTab] = useState<EntityKey>('risikomanagement');
+  const [activeTab, setActiveTab] = useState<EntityKey>('bcm_notfallmanagement');
   const [selectedIds, setSelectedIds] = useState<Record<EntityKey, Set<string>>>(() => ({
-    'risikomanagement': new Set(),
+    'bcm_notfallmanagement': new Set(),
+    'awareness_schulungen': new Set(),
+    'aufgaben_freigaben': new Set(),
     'organisationseinheiten': new Set(),
-    'soa_management': new Set(),
-    'lieferantenmanagement': new Set(),
-    'dokumente_&_evidenzen': new Set(),
-    'framework_verwaltung': new Set(),
-    'findings_&_abweichungen': new Set(),
-    'kontroll_management': new Set(),
-    'audit_management': new Set(),
-    'bcm_&_notfallmanagement': new Set(),
-    'aufgaben_&_freigaben': new Set(),
-    'awareness_&_schulungen': new Set(),
-    'maßnahmen_management': new Set(),
-    'incident_management': new Set(),
     'asset_register': new Set(),
+    'framework_verwaltung': new Set(),
+    'risikomanagement': new Set(),
+    'maßnahmen_management': new Set(),
+    'kontroll_management': new Set(),
+    'soa_management': new Set(),
+    'audit_management': new Set(),
+    'findings_abweichungen': new Set(),
+    'incident_management': new Set(),
+    'lieferantenmanagement': new Set(),
     'policy_management': new Set(),
+    'dokumente_evidenzen': new Set(),
   }));
   const [filters, setFilters] = useState<Record<EntityKey, Record<string, string>>>(() => ({
-    'risikomanagement': {},
+    'bcm_notfallmanagement': {},
+    'awareness_schulungen': {},
+    'aufgaben_freigaben': {},
     'organisationseinheiten': {},
-    'soa_management': {},
-    'lieferantenmanagement': {},
-    'dokumente_&_evidenzen': {},
-    'framework_verwaltung': {},
-    'findings_&_abweichungen': {},
-    'kontroll_management': {},
-    'audit_management': {},
-    'bcm_&_notfallmanagement': {},
-    'aufgaben_&_freigaben': {},
-    'awareness_&_schulungen': {},
-    'maßnahmen_management': {},
-    'incident_management': {},
     'asset_register': {},
+    'framework_verwaltung': {},
+    'risikomanagement': {},
+    'maßnahmen_management': {},
+    'kontroll_management': {},
+    'soa_management': {},
+    'audit_management': {},
+    'findings_abweichungen': {},
+    'incident_management': {},
+    'lieferantenmanagement': {},
     'policy_management': {},
+    'dokumente_evidenzen': {},
   }));
   const [showFilters, setShowFilters] = useState(false);
   const [dialogState, setDialogState] = useState<{ entity: EntityKey; record: any } | null>(null);
@@ -401,22 +401,22 @@ export default function AdminPage() {
 
   const getRecords = useCallback((entity: EntityKey) => {
     switch (entity) {
-      case 'risikomanagement': return (data as any).risikomanagement as Risikomanagement[] ?? [];
+      case 'bcm_notfallmanagement': return (data as any).bcmNotfallmanagement as BcmNotfallmanagement[] ?? [];
+      case 'awareness_schulungen': return (data as any).awarenessSchulungen as AwarenessSchulungen[] ?? [];
+      case 'aufgaben_freigaben': return (data as any).aufgabenFreigaben as AufgabenFreigaben[] ?? [];
       case 'organisationseinheiten': return (data as any).organisationseinheiten as Organisationseinheiten[] ?? [];
-      case 'soa_management': return (data as any).soaManagement as SoaManagement[] ?? [];
-      case 'lieferantenmanagement': return (data as any).lieferantenmanagement as Lieferantenmanagement[] ?? [];
-      case 'dokumente_&_evidenzen': return (data as any).dokumenteEvidenzen as DokumenteEvidenzen[] ?? [];
-      case 'framework_verwaltung': return (data as any).frameworkVerwaltung as FrameworkVerwaltung[] ?? [];
-      case 'findings_&_abweichungen': return (data as any).findingsAbweichungen as FindingsAbweichungen[] ?? [];
-      case 'kontroll_management': return (data as any).kontrollManagement as KontrollManagement[] ?? [];
-      case 'audit_management': return (data as any).auditManagement as AuditManagement[] ?? [];
-      case 'bcm_&_notfallmanagement': return (data as any).bcmNotfallmanagement as BcmNotfallmanagement[] ?? [];
-      case 'aufgaben_&_freigaben': return (data as any).aufgabenFreigaben as AufgabenFreigaben[] ?? [];
-      case 'awareness_&_schulungen': return (data as any).awarenessSchulungen as AwarenessSchulungen[] ?? [];
-      case 'maßnahmen_management': return (data as any).massnahmenManagement as MassnahmenManagement[] ?? [];
-      case 'incident_management': return (data as any).incidentManagement as IncidentManagement[] ?? [];
       case 'asset_register': return (data as any).assetRegister as AssetRegister[] ?? [];
+      case 'framework_verwaltung': return (data as any).frameworkVerwaltung as FrameworkVerwaltung[] ?? [];
+      case 'risikomanagement': return (data as any).risikomanagement as Risikomanagement[] ?? [];
+      case 'maßnahmen_management': return (data as any).massnahmenManagement as MassnahmenManagement[] ?? [];
+      case 'kontroll_management': return (data as any).kontrollManagement as KontrollManagement[] ?? [];
+      case 'soa_management': return (data as any).soaManagement as SoaManagement[] ?? [];
+      case 'audit_management': return (data as any).auditManagement as AuditManagement[] ?? [];
+      case 'findings_abweichungen': return (data as any).findingsAbweichungen as FindingsAbweichungen[] ?? [];
+      case 'incident_management': return (data as any).incidentManagement as IncidentManagement[] ?? [];
+      case 'lieferantenmanagement': return (data as any).lieferantenmanagement as Lieferantenmanagement[] ?? [];
       case 'policy_management': return (data as any).policyManagement as PolicyManagement[] ?? [];
+      case 'dokumente_evidenzen': return (data as any).dokumenteEvidenzen as DokumenteEvidenzen[] ?? [];
       default: return [];
     }
   }, [data]);
@@ -424,53 +424,53 @@ export default function AdminPage() {
   const getLookupLists = useCallback((entity: EntityKey) => {
     const lists: Record<string, any[]> = {};
     switch (entity) {
+      case 'bcm_notfallmanagement':
+        lists.asset_registerList = (data as any).assetRegister ?? [];
+        break;
+      case 'awareness_schulungen':
+        lists.framework_verwaltungList = (data as any).frameworkVerwaltung ?? [];
+        break;
+      case 'aufgaben_freigaben':
+        lists.risikomanagementList = (data as any).risikomanagement ?? [];
+        lists.maßnahmen_managementList = (data as any).massnahmenManagement ?? [];
+        lists.audit_managementList = (data as any).auditManagement ?? [];
+        break;
+      case 'asset_register':
+        lists.organisationseinheitenList = (data as any).organisationseinheiten ?? [];
+        break;
       case 'risikomanagement':
         lists.asset_registerList = (data as any).assetRegister ?? [];
         lists.organisationseinheitenList = (data as any).organisationseinheiten ?? [];
         break;
-      case 'soa_management':
-        lists.kontroll_managementList = (data as any).kontrollManagement ?? [];
-        break;
-      case 'dokumente_&_evidenzen':
-        lists.kontroll_managementList = (data as any).kontrollManagement ?? [];
-        lists.audit_managementList = (data as any).auditManagement ?? [];
-        break;
-      case 'findings_&_abweichungen':
-        lists.audit_managementList = (data as any).auditManagement ?? [];
-        lists.kontroll_managementList = (data as any).kontrollManagement ?? [];
-        lists.maßnahmen_managementList = (data as any).massnahmenManagement ?? [];
+      case 'maßnahmen_management':
+        lists.risikomanagementList = (data as any).risikomanagement ?? [];
         break;
       case 'kontroll_management':
         lists.framework_verwaltungList = (data as any).frameworkVerwaltung ?? [];
         lists.maßnahmen_managementList = (data as any).massnahmenManagement ?? [];
         break;
+      case 'soa_management':
+        lists.kontroll_managementList = (data as any).kontrollManagement ?? [];
+        break;
       case 'audit_management':
         lists.framework_verwaltungList = (data as any).frameworkVerwaltung ?? [];
         lists.organisationseinheitenList = (data as any).organisationseinheiten ?? [];
         break;
-      case 'bcm_&_notfallmanagement':
-        lists.asset_registerList = (data as any).assetRegister ?? [];
-        break;
-      case 'aufgaben_&_freigaben':
-        lists.risikomanagementList = (data as any).risikomanagement ?? [];
-        lists.maßnahmen_managementList = (data as any).massnahmenManagement ?? [];
+      case 'findings_abweichungen':
         lists.audit_managementList = (data as any).auditManagement ?? [];
-        break;
-      case 'awareness_&_schulungen':
-        lists.framework_verwaltungList = (data as any).frameworkVerwaltung ?? [];
-        break;
-      case 'maßnahmen_management':
-        lists.risikomanagementList = (data as any).risikomanagement ?? [];
+        lists.kontroll_managementList = (data as any).kontrollManagement ?? [];
+        lists.maßnahmen_managementList = (data as any).massnahmenManagement ?? [];
         break;
       case 'incident_management':
         lists.asset_registerList = (data as any).assetRegister ?? [];
         lists.organisationseinheitenList = (data as any).organisationseinheiten ?? [];
         break;
-      case 'asset_register':
-        lists.organisationseinheitenList = (data as any).organisationseinheiten ?? [];
-        break;
       case 'policy_management':
         lists.framework_verwaltungList = (data as any).frameworkVerwaltung ?? [];
+        break;
+      case 'dokumente_evidenzen':
+        lists.kontroll_managementList = (data as any).kontrollManagement ?? [];
+        lists.audit_managementList = (data as any).auditManagement ?? [];
         break;
     }
     return lists;
@@ -482,6 +482,30 @@ export default function AdminPage() {
     if (!id) return '—';
     const lists = getLookupLists(entity);
     void fieldKey; // ensure used for noUnusedParameters
+    if (entity === 'bcm_notfallmanagement' && fieldKey === 'bcm_related_asset') {
+      const match = (lists.asset_registerList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.asset_name ?? '—';
+    }
+    if (entity === 'awareness_schulungen' && fieldKey === 'training_framework') {
+      const match = (lists.framework_verwaltungList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.fw_name ?? '—';
+    }
+    if (entity === 'aufgaben_freigaben' && fieldKey === 'task_related_risk') {
+      const match = (lists.risikomanagementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.risk_owner_firstname ?? '—';
+    }
+    if (entity === 'aufgaben_freigaben' && fieldKey === 'task_related_measure') {
+      const match = (lists.maßnahmen_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.measure_id ?? '—';
+    }
+    if (entity === 'aufgaben_freigaben' && fieldKey === 'task_related_audit') {
+      const match = (lists.audit_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.audit_id ?? '—';
+    }
+    if (entity === 'asset_register' && fieldKey === 'asset_org_unit') {
+      const match = (lists.organisationseinheitenList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.org_housenumber ?? '—';
+    }
     if (entity === 'risikomanagement' && fieldKey === 'risk_asset') {
       const match = (lists.asset_registerList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.asset_name ?? '—';
@@ -490,29 +514,9 @@ export default function AdminPage() {
       const match = (lists.organisationseinheitenList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.org_housenumber ?? '—';
     }
-    if (entity === 'soa_management' && fieldKey === 'soa_control') {
-      const match = (lists.kontroll_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.ctrl_id ?? '—';
-    }
-    if (entity === 'dokumente_&_evidenzen' && fieldKey === 'doc_related_control') {
-      const match = (lists.kontroll_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.ctrl_id ?? '—';
-    }
-    if (entity === 'dokumente_&_evidenzen' && fieldKey === 'doc_related_audit') {
-      const match = (lists.audit_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.audit_id ?? '—';
-    }
-    if (entity === 'findings_&_abweichungen' && fieldKey === 'finding_audit') {
-      const match = (lists.audit_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.audit_id ?? '—';
-    }
-    if (entity === 'findings_&_abweichungen' && fieldKey === 'finding_control') {
-      const match = (lists.kontroll_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.ctrl_id ?? '—';
-    }
-    if (entity === 'findings_&_abweichungen' && fieldKey === 'finding_measure') {
-      const match = (lists.maßnahmen_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.measure_id ?? '—';
+    if (entity === 'maßnahmen_management' && fieldKey === 'measure_risk') {
+      const match = (lists.risikomanagementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.risk_owner_firstname ?? '—';
     }
     if (entity === 'kontroll_management' && fieldKey === 'ctrl_framework') {
       const match = (lists.framework_verwaltungList ?? []).find((r: any) => r.record_id === id);
@@ -522,6 +526,10 @@ export default function AdminPage() {
       const match = (lists.maßnahmen_managementList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.measure_id ?? '—';
     }
+    if (entity === 'soa_management' && fieldKey === 'soa_control') {
+      const match = (lists.kontroll_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.ctrl_id ?? '—';
+    }
     if (entity === 'audit_management' && fieldKey === 'audit_framework') {
       const match = (lists.framework_verwaltungList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.fw_name ?? '—';
@@ -530,29 +538,17 @@ export default function AdminPage() {
       const match = (lists.organisationseinheitenList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.org_housenumber ?? '—';
     }
-    if (entity === 'bcm_&_notfallmanagement' && fieldKey === 'bcm_related_asset') {
-      const match = (lists.asset_registerList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.asset_name ?? '—';
-    }
-    if (entity === 'aufgaben_&_freigaben' && fieldKey === 'task_related_risk') {
-      const match = (lists.risikomanagementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.risk_description ?? '—';
-    }
-    if (entity === 'aufgaben_&_freigaben' && fieldKey === 'task_related_measure') {
-      const match = (lists.maßnahmen_managementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.measure_id ?? '—';
-    }
-    if (entity === 'aufgaben_&_freigaben' && fieldKey === 'task_related_audit') {
+    if (entity === 'findings_abweichungen' && fieldKey === 'finding_audit') {
       const match = (lists.audit_managementList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.audit_id ?? '—';
     }
-    if (entity === 'awareness_&_schulungen' && fieldKey === 'training_framework') {
-      const match = (lists.framework_verwaltungList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.fw_name ?? '—';
+    if (entity === 'findings_abweichungen' && fieldKey === 'finding_control') {
+      const match = (lists.kontroll_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.ctrl_id ?? '—';
     }
-    if (entity === 'maßnahmen_management' && fieldKey === 'measure_risk') {
-      const match = (lists.risikomanagementList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.risk_description ?? '—';
+    if (entity === 'findings_abweichungen' && fieldKey === 'finding_measure') {
+      const match = (lists.maßnahmen_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.measure_id ?? '—';
     }
     if (entity === 'incident_management' && fieldKey === 'incident_affected_asset') {
       const match = (lists.asset_registerList ?? []).find((r: any) => r.record_id === id);
@@ -562,35 +558,39 @@ export default function AdminPage() {
       const match = (lists.organisationseinheitenList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.org_housenumber ?? '—';
     }
-    if (entity === 'asset_register' && fieldKey === 'asset_org_unit') {
-      const match = (lists.organisationseinheitenList ?? []).find((r: any) => r.record_id === id);
-      return match?.fields.org_housenumber ?? '—';
-    }
     if (entity === 'policy_management' && fieldKey === 'policy_framework') {
       const match = (lists.framework_verwaltungList ?? []).find((r: any) => r.record_id === id);
       return match?.fields.fw_name ?? '—';
+    }
+    if (entity === 'dokumente_evidenzen' && fieldKey === 'doc_related_control') {
+      const match = (lists.kontroll_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.ctrl_id ?? '—';
+    }
+    if (entity === 'dokumente_evidenzen' && fieldKey === 'doc_related_audit') {
+      const match = (lists.audit_managementList ?? []).find((r: any) => r.record_id === id);
+      return match?.fields.audit_id ?? '—';
     }
     return String(url);
   }, [getLookupLists]);
 
   const getFieldMeta = useCallback((entity: EntityKey) => {
     switch (entity) {
-      case 'risikomanagement': return RISIKOMANAGEMENT_FIELDS;
+      case 'bcm_notfallmanagement': return BCMNOTFALLMANAGEMENT_FIELDS;
+      case 'awareness_schulungen': return AWARENESSSCHULUNGEN_FIELDS;
+      case 'aufgaben_freigaben': return AUFGABENFREIGABEN_FIELDS;
       case 'organisationseinheiten': return ORGANISATIONSEINHEITEN_FIELDS;
-      case 'soa_management': return SOAMANAGEMENT_FIELDS;
-      case 'lieferantenmanagement': return LIEFERANTENMANAGEMENT_FIELDS;
-      case 'dokumente_&_evidenzen': return DOKUMENTEEVIDENZEN_FIELDS;
-      case 'framework_verwaltung': return FRAMEWORKVERWALTUNG_FIELDS;
-      case 'findings_&_abweichungen': return FINDINGSABWEICHUNGEN_FIELDS;
-      case 'kontroll_management': return KONTROLLMANAGEMENT_FIELDS;
-      case 'audit_management': return AUDITMANAGEMENT_FIELDS;
-      case 'bcm_&_notfallmanagement': return BCMNOTFALLMANAGEMENT_FIELDS;
-      case 'aufgaben_&_freigaben': return AUFGABENFREIGABEN_FIELDS;
-      case 'awareness_&_schulungen': return AWARENESSSCHULUNGEN_FIELDS;
-      case 'maßnahmen_management': return MASSNAHMENMANAGEMENT_FIELDS;
-      case 'incident_management': return INCIDENTMANAGEMENT_FIELDS;
       case 'asset_register': return ASSETREGISTER_FIELDS;
+      case 'framework_verwaltung': return FRAMEWORKVERWALTUNG_FIELDS;
+      case 'risikomanagement': return RISIKOMANAGEMENT_FIELDS;
+      case 'maßnahmen_management': return MASSNAHMENMANAGEMENT_FIELDS;
+      case 'kontroll_management': return KONTROLLMANAGEMENT_FIELDS;
+      case 'soa_management': return SOAMANAGEMENT_FIELDS;
+      case 'audit_management': return AUDITMANAGEMENT_FIELDS;
+      case 'findings_abweichungen': return FINDINGSABWEICHUNGEN_FIELDS;
+      case 'incident_management': return INCIDENTMANAGEMENT_FIELDS;
+      case 'lieferantenmanagement': return LIEFERANTENMANAGEMENT_FIELDS;
       case 'policy_management': return POLICYMANAGEMENT_FIELDS;
+      case 'dokumente_evidenzen': return DOKUMENTEEVIDENZEN_FIELDS;
       default: return [];
     }
   }, []);
@@ -685,85 +685,85 @@ export default function AdminPage() {
 
   const getServiceMethods = useCallback((entity: EntityKey) => {
     switch (entity) {
-      case 'risikomanagement': return {
-        create: (fields: any) => LivingAppsService.createRisikomanagementEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateRisikomanagementEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteRisikomanagementEntry(id),
+      case 'bcm_notfallmanagement': return {
+        create: (fields: any) => LivingAppsService.createBcmNotfallmanagementEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateBcmNotfallmanagementEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteBcmNotfallmanagementEntry(id),
+      };
+      case 'awareness_schulungen': return {
+        create: (fields: any) => LivingAppsService.createAwarenessSchulungenEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateAwarenessSchulungenEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteAwarenessSchulungenEntry(id),
+      };
+      case 'aufgaben_freigaben': return {
+        create: (fields: any) => LivingAppsService.createAufgabenFreigabenEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateAufgabenFreigabenEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteAufgabenFreigabenEntry(id),
       };
       case 'organisationseinheiten': return {
         create: (fields: any) => LivingAppsService.createOrganisationseinheitenEntry(fields),
         update: (id: string, fields: any) => LivingAppsService.updateOrganisationseinheitenEntry(id, fields),
         remove: (id: string) => LivingAppsService.deleteOrganisationseinheitenEntry(id),
       };
-      case 'soa_management': return {
-        create: (fields: any) => LivingAppsService.createSoaManagementEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateSoaManagementEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteSoaManagementEntry(id),
-      };
-      case 'lieferantenmanagement': return {
-        create: (fields: any) => LivingAppsService.createLieferantenmanagementEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateLieferantenmanagementEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteLieferantenmanagementEntry(id),
-      };
-      case 'dokumente_&_evidenzen': return {
-        create: (fields: any) => LivingAppsService.createDokumenteEvidenzenEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateDokumenteEvidenzenEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteDokumenteEvidenzenEntry(id),
+      case 'asset_register': return {
+        create: (fields: any) => LivingAppsService.createAssetRegisterEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateAssetRegisterEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteAssetRegisterEntry(id),
       };
       case 'framework_verwaltung': return {
         create: (fields: any) => LivingAppsService.createFrameworkVerwaltungEntry(fields),
         update: (id: string, fields: any) => LivingAppsService.updateFrameworkVerwaltungEntry(id, fields),
         remove: (id: string) => LivingAppsService.deleteFrameworkVerwaltungEntry(id),
       };
-      case 'findings_&_abweichungen': return {
-        create: (fields: any) => LivingAppsService.createFindingsAbweichungenEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateFindingsAbweichungenEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteFindingsAbweichungenEntry(id),
-      };
-      case 'kontroll_management': return {
-        create: (fields: any) => LivingAppsService.createKontrollManagementEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateKontrollManagementEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteKontrollManagementEntry(id),
-      };
-      case 'audit_management': return {
-        create: (fields: any) => LivingAppsService.createAuditManagementEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateAuditManagementEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteAuditManagementEntry(id),
-      };
-      case 'bcm_&_notfallmanagement': return {
-        create: (fields: any) => LivingAppsService.createBcmNotfallmanagementEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateBcmNotfallmanagementEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteBcmNotfallmanagementEntry(id),
-      };
-      case 'aufgaben_&_freigaben': return {
-        create: (fields: any) => LivingAppsService.createAufgabenFreigabenEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateAufgabenFreigabenEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteAufgabenFreigabenEntry(id),
-      };
-      case 'awareness_&_schulungen': return {
-        create: (fields: any) => LivingAppsService.createAwarenessSchulungenEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateAwarenessSchulungenEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteAwarenessSchulungenEntry(id),
+      case 'risikomanagement': return {
+        create: (fields: any) => LivingAppsService.createRisikomanagementEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateRisikomanagementEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteRisikomanagementEntry(id),
       };
       case 'maßnahmen_management': return {
         create: (fields: any) => LivingAppsService.createMassnahmenManagementEntry(fields),
         update: (id: string, fields: any) => LivingAppsService.updateMassnahmenManagementEntry(id, fields),
         remove: (id: string) => LivingAppsService.deleteMassnahmenManagementEntry(id),
       };
+      case 'kontroll_management': return {
+        create: (fields: any) => LivingAppsService.createKontrollManagementEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateKontrollManagementEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteKontrollManagementEntry(id),
+      };
+      case 'soa_management': return {
+        create: (fields: any) => LivingAppsService.createSoaManagementEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateSoaManagementEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteSoaManagementEntry(id),
+      };
+      case 'audit_management': return {
+        create: (fields: any) => LivingAppsService.createAuditManagementEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateAuditManagementEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteAuditManagementEntry(id),
+      };
+      case 'findings_abweichungen': return {
+        create: (fields: any) => LivingAppsService.createFindingsAbweichungenEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateFindingsAbweichungenEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteFindingsAbweichungenEntry(id),
+      };
       case 'incident_management': return {
         create: (fields: any) => LivingAppsService.createIncidentManagementEntry(fields),
         update: (id: string, fields: any) => LivingAppsService.updateIncidentManagementEntry(id, fields),
         remove: (id: string) => LivingAppsService.deleteIncidentManagementEntry(id),
       };
-      case 'asset_register': return {
-        create: (fields: any) => LivingAppsService.createAssetRegisterEntry(fields),
-        update: (id: string, fields: any) => LivingAppsService.updateAssetRegisterEntry(id, fields),
-        remove: (id: string) => LivingAppsService.deleteAssetRegisterEntry(id),
+      case 'lieferantenmanagement': return {
+        create: (fields: any) => LivingAppsService.createLieferantenmanagementEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateLieferantenmanagementEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteLieferantenmanagementEntry(id),
       };
       case 'policy_management': return {
         create: (fields: any) => LivingAppsService.createPolicyManagementEntry(fields),
         update: (id: string, fields: any) => LivingAppsService.updatePolicyManagementEntry(id, fields),
         remove: (id: string) => LivingAppsService.deletePolicyManagementEntry(id),
+      };
+      case 'dokumente_evidenzen': return {
+        create: (fields: any) => LivingAppsService.createDokumenteEvidenzenEntry(fields),
+        update: (id: string, fields: any) => LivingAppsService.updateDokumenteEvidenzenEntry(id, fields),
+        remove: (id: string) => LivingAppsService.deleteDokumenteEvidenzenEntry(id),
       };
       default: return null;
     }
@@ -1092,16 +1092,39 @@ export default function AdminPage() {
         </Table>
       </div>
 
-      {(createEntity === 'risikomanagement' || dialogState?.entity === 'risikomanagement') && (
-        <RisikomanagementDialog
-          open={createEntity === 'risikomanagement' || dialogState?.entity === 'risikomanagement'}
+      {(createEntity === 'bcm_notfallmanagement' || dialogState?.entity === 'bcm_notfallmanagement') && (
+        <BcmNotfallmanagementDialog
+          open={createEntity === 'bcm_notfallmanagement' || dialogState?.entity === 'bcm_notfallmanagement'}
           onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'risikomanagement' ? handleUpdate : (fields: any) => handleCreate('risikomanagement', fields)}
-          defaultValues={dialogState?.entity === 'risikomanagement' ? dialogState.record?.fields : undefined}
+          onSubmit={dialogState?.entity === 'bcm_notfallmanagement' ? handleUpdate : (fields: any) => handleCreate('bcm_notfallmanagement', fields)}
+          defaultValues={dialogState?.entity === 'bcm_notfallmanagement' ? dialogState.record?.fields : undefined}
           asset_registerList={(data as any).assetRegister ?? []}
-          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['Risikomanagement']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['Risikomanagement']}
+          enablePhotoScan={AI_PHOTO_SCAN['BcmNotfallmanagement']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['BcmNotfallmanagement']}
+        />
+      )}
+      {(createEntity === 'awareness_schulungen' || dialogState?.entity === 'awareness_schulungen') && (
+        <AwarenessSchulungenDialog
+          open={createEntity === 'awareness_schulungen' || dialogState?.entity === 'awareness_schulungen'}
+          onClose={() => { setCreateEntity(null); setDialogState(null); }}
+          onSubmit={dialogState?.entity === 'awareness_schulungen' ? handleUpdate : (fields: any) => handleCreate('awareness_schulungen', fields)}
+          defaultValues={dialogState?.entity === 'awareness_schulungen' ? dialogState.record?.fields : undefined}
+          framework_verwaltungList={(data as any).frameworkVerwaltung ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['AwarenessSchulungen']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['AwarenessSchulungen']}
+        />
+      )}
+      {(createEntity === 'aufgaben_freigaben' || dialogState?.entity === 'aufgaben_freigaben') && (
+        <AufgabenFreigabenDialog
+          open={createEntity === 'aufgaben_freigaben' || dialogState?.entity === 'aufgaben_freigaben'}
+          onClose={() => { setCreateEntity(null); setDialogState(null); }}
+          onSubmit={dialogState?.entity === 'aufgaben_freigaben' ? handleUpdate : (fields: any) => handleCreate('aufgaben_freigaben', fields)}
+          defaultValues={dialogState?.entity === 'aufgaben_freigaben' ? dialogState.record?.fields : undefined}
+          risikomanagementList={(data as any).risikomanagement ?? []}
+          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
+          audit_managementList={(data as any).auditManagement ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['AufgabenFreigaben']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['AufgabenFreigaben']}
         />
       )}
       {(createEntity === 'organisationseinheiten' || dialogState?.entity === 'organisationseinheiten') && (
@@ -1114,37 +1137,15 @@ export default function AdminPage() {
           enablePhotoLocation={AI_PHOTO_LOCATION['Organisationseinheiten']}
         />
       )}
-      {(createEntity === 'soa_management' || dialogState?.entity === 'soa_management') && (
-        <SoaManagementDialog
-          open={createEntity === 'soa_management' || dialogState?.entity === 'soa_management'}
+      {(createEntity === 'asset_register' || dialogState?.entity === 'asset_register') && (
+        <AssetRegisterDialog
+          open={createEntity === 'asset_register' || dialogState?.entity === 'asset_register'}
           onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'soa_management' ? handleUpdate : (fields: any) => handleCreate('soa_management', fields)}
-          defaultValues={dialogState?.entity === 'soa_management' ? dialogState.record?.fields : undefined}
-          kontroll_managementList={(data as any).kontrollManagement ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['SoaManagement']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['SoaManagement']}
-        />
-      )}
-      {(createEntity === 'lieferantenmanagement' || dialogState?.entity === 'lieferantenmanagement') && (
-        <LieferantenmanagementDialog
-          open={createEntity === 'lieferantenmanagement' || dialogState?.entity === 'lieferantenmanagement'}
-          onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'lieferantenmanagement' ? handleUpdate : (fields: any) => handleCreate('lieferantenmanagement', fields)}
-          defaultValues={dialogState?.entity === 'lieferantenmanagement' ? dialogState.record?.fields : undefined}
-          enablePhotoScan={AI_PHOTO_SCAN['Lieferantenmanagement']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['Lieferantenmanagement']}
-        />
-      )}
-      {(createEntity === 'dokumente_&_evidenzen' || dialogState?.entity === 'dokumente_&_evidenzen') && (
-        <DokumenteEvidenzenDialog
-          open={createEntity === 'dokumente_&_evidenzen' || dialogState?.entity === 'dokumente_&_evidenzen'}
-          onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'dokumente_&_evidenzen' ? handleUpdate : (fields: any) => handleCreate('dokumente_&_evidenzen', fields)}
-          defaultValues={dialogState?.entity === 'dokumente_&_evidenzen' ? dialogState.record?.fields : undefined}
-          kontroll_managementList={(data as any).kontrollManagement ?? []}
-          audit_managementList={(data as any).auditManagement ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['DokumenteEvidenzen']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['DokumenteEvidenzen']}
+          onSubmit={dialogState?.entity === 'asset_register' ? handleUpdate : (fields: any) => handleCreate('asset_register', fields)}
+          defaultValues={dialogState?.entity === 'asset_register' ? dialogState.record?.fields : undefined}
+          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['AssetRegister']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['AssetRegister']}
         />
       )}
       {(createEntity === 'framework_verwaltung' || dialogState?.entity === 'framework_verwaltung') && (
@@ -1157,17 +1158,27 @@ export default function AdminPage() {
           enablePhotoLocation={AI_PHOTO_LOCATION['FrameworkVerwaltung']}
         />
       )}
-      {(createEntity === 'findings_&_abweichungen' || dialogState?.entity === 'findings_&_abweichungen') && (
-        <FindingsAbweichungenDialog
-          open={createEntity === 'findings_&_abweichungen' || dialogState?.entity === 'findings_&_abweichungen'}
+      {(createEntity === 'risikomanagement' || dialogState?.entity === 'risikomanagement') && (
+        <RisikomanagementDialog
+          open={createEntity === 'risikomanagement' || dialogState?.entity === 'risikomanagement'}
           onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'findings_&_abweichungen' ? handleUpdate : (fields: any) => handleCreate('findings_&_abweichungen', fields)}
-          defaultValues={dialogState?.entity === 'findings_&_abweichungen' ? dialogState.record?.fields : undefined}
-          audit_managementList={(data as any).auditManagement ?? []}
-          kontroll_managementList={(data as any).kontrollManagement ?? []}
-          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['FindingsAbweichungen']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['FindingsAbweichungen']}
+          onSubmit={dialogState?.entity === 'risikomanagement' ? handleUpdate : (fields: any) => handleCreate('risikomanagement', fields)}
+          defaultValues={dialogState?.entity === 'risikomanagement' ? dialogState.record?.fields : undefined}
+          asset_registerList={(data as any).assetRegister ?? []}
+          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['Risikomanagement']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['Risikomanagement']}
+        />
+      )}
+      {(createEntity === 'maßnahmen_management' || dialogState?.entity === 'maßnahmen_management') && (
+        <MassnahmenManagementDialog
+          open={createEntity === 'maßnahmen_management' || dialogState?.entity === 'maßnahmen_management'}
+          onClose={() => { setCreateEntity(null); setDialogState(null); }}
+          onSubmit={dialogState?.entity === 'maßnahmen_management' ? handleUpdate : (fields: any) => handleCreate('maßnahmen_management', fields)}
+          defaultValues={dialogState?.entity === 'maßnahmen_management' ? dialogState.record?.fields : undefined}
+          risikomanagementList={(data as any).risikomanagement ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['MassnahmenManagement']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['MassnahmenManagement']}
         />
       )}
       {(createEntity === 'kontroll_management' || dialogState?.entity === 'kontroll_management') && (
@@ -1182,6 +1193,17 @@ export default function AdminPage() {
           enablePhotoLocation={AI_PHOTO_LOCATION['KontrollManagement']}
         />
       )}
+      {(createEntity === 'soa_management' || dialogState?.entity === 'soa_management') && (
+        <SoaManagementDialog
+          open={createEntity === 'soa_management' || dialogState?.entity === 'soa_management'}
+          onClose={() => { setCreateEntity(null); setDialogState(null); }}
+          onSubmit={dialogState?.entity === 'soa_management' ? handleUpdate : (fields: any) => handleCreate('soa_management', fields)}
+          defaultValues={dialogState?.entity === 'soa_management' ? dialogState.record?.fields : undefined}
+          kontroll_managementList={(data as any).kontrollManagement ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['SoaManagement']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['SoaManagement']}
+        />
+      )}
       {(createEntity === 'audit_management' || dialogState?.entity === 'audit_management') && (
         <AuditManagementDialog
           open={createEntity === 'audit_management' || dialogState?.entity === 'audit_management'}
@@ -1194,50 +1216,17 @@ export default function AdminPage() {
           enablePhotoLocation={AI_PHOTO_LOCATION['AuditManagement']}
         />
       )}
-      {(createEntity === 'bcm_&_notfallmanagement' || dialogState?.entity === 'bcm_&_notfallmanagement') && (
-        <BcmNotfallmanagementDialog
-          open={createEntity === 'bcm_&_notfallmanagement' || dialogState?.entity === 'bcm_&_notfallmanagement'}
+      {(createEntity === 'findings_abweichungen' || dialogState?.entity === 'findings_abweichungen') && (
+        <FindingsAbweichungenDialog
+          open={createEntity === 'findings_abweichungen' || dialogState?.entity === 'findings_abweichungen'}
           onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'bcm_&_notfallmanagement' ? handleUpdate : (fields: any) => handleCreate('bcm_&_notfallmanagement', fields)}
-          defaultValues={dialogState?.entity === 'bcm_&_notfallmanagement' ? dialogState.record?.fields : undefined}
-          asset_registerList={(data as any).assetRegister ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['BcmNotfallmanagement']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['BcmNotfallmanagement']}
-        />
-      )}
-      {(createEntity === 'aufgaben_&_freigaben' || dialogState?.entity === 'aufgaben_&_freigaben') && (
-        <AufgabenFreigabenDialog
-          open={createEntity === 'aufgaben_&_freigaben' || dialogState?.entity === 'aufgaben_&_freigaben'}
-          onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'aufgaben_&_freigaben' ? handleUpdate : (fields: any) => handleCreate('aufgaben_&_freigaben', fields)}
-          defaultValues={dialogState?.entity === 'aufgaben_&_freigaben' ? dialogState.record?.fields : undefined}
-          risikomanagementList={(data as any).risikomanagement ?? []}
-          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
+          onSubmit={dialogState?.entity === 'findings_abweichungen' ? handleUpdate : (fields: any) => handleCreate('findings_abweichungen', fields)}
+          defaultValues={dialogState?.entity === 'findings_abweichungen' ? dialogState.record?.fields : undefined}
           audit_managementList={(data as any).auditManagement ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['AufgabenFreigaben']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['AufgabenFreigaben']}
-        />
-      )}
-      {(createEntity === 'awareness_&_schulungen' || dialogState?.entity === 'awareness_&_schulungen') && (
-        <AwarenessSchulungenDialog
-          open={createEntity === 'awareness_&_schulungen' || dialogState?.entity === 'awareness_&_schulungen'}
-          onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'awareness_&_schulungen' ? handleUpdate : (fields: any) => handleCreate('awareness_&_schulungen', fields)}
-          defaultValues={dialogState?.entity === 'awareness_&_schulungen' ? dialogState.record?.fields : undefined}
-          framework_verwaltungList={(data as any).frameworkVerwaltung ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['AwarenessSchulungen']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['AwarenessSchulungen']}
-        />
-      )}
-      {(createEntity === 'maßnahmen_management' || dialogState?.entity === 'maßnahmen_management') && (
-        <MassnahmenManagementDialog
-          open={createEntity === 'maßnahmen_management' || dialogState?.entity === 'maßnahmen_management'}
-          onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'maßnahmen_management' ? handleUpdate : (fields: any) => handleCreate('maßnahmen_management', fields)}
-          defaultValues={dialogState?.entity === 'maßnahmen_management' ? dialogState.record?.fields : undefined}
-          risikomanagementList={(data as any).risikomanagement ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['MassnahmenManagement']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['MassnahmenManagement']}
+          kontroll_managementList={(data as any).kontrollManagement ?? []}
+          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['FindingsAbweichungen']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['FindingsAbweichungen']}
         />
       )}
       {(createEntity === 'incident_management' || dialogState?.entity === 'incident_management') && (
@@ -1252,15 +1241,14 @@ export default function AdminPage() {
           enablePhotoLocation={AI_PHOTO_LOCATION['IncidentManagement']}
         />
       )}
-      {(createEntity === 'asset_register' || dialogState?.entity === 'asset_register') && (
-        <AssetRegisterDialog
-          open={createEntity === 'asset_register' || dialogState?.entity === 'asset_register'}
+      {(createEntity === 'lieferantenmanagement' || dialogState?.entity === 'lieferantenmanagement') && (
+        <LieferantenmanagementDialog
+          open={createEntity === 'lieferantenmanagement' || dialogState?.entity === 'lieferantenmanagement'}
           onClose={() => { setCreateEntity(null); setDialogState(null); }}
-          onSubmit={dialogState?.entity === 'asset_register' ? handleUpdate : (fields: any) => handleCreate('asset_register', fields)}
-          defaultValues={dialogState?.entity === 'asset_register' ? dialogState.record?.fields : undefined}
-          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
-          enablePhotoScan={AI_PHOTO_SCAN['AssetRegister']}
-          enablePhotoLocation={AI_PHOTO_LOCATION['AssetRegister']}
+          onSubmit={dialogState?.entity === 'lieferantenmanagement' ? handleUpdate : (fields: any) => handleCreate('lieferantenmanagement', fields)}
+          defaultValues={dialogState?.entity === 'lieferantenmanagement' ? dialogState.record?.fields : undefined}
+          enablePhotoScan={AI_PHOTO_SCAN['Lieferantenmanagement']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['Lieferantenmanagement']}
         />
       )}
       {(createEntity === 'policy_management' || dialogState?.entity === 'policy_management') && (
@@ -1274,14 +1262,45 @@ export default function AdminPage() {
           enablePhotoLocation={AI_PHOTO_LOCATION['PolicyManagement']}
         />
       )}
-      {viewState?.entity === 'risikomanagement' && (
-        <RisikomanagementViewDialog
-          open={viewState?.entity === 'risikomanagement'}
+      {(createEntity === 'dokumente_evidenzen' || dialogState?.entity === 'dokumente_evidenzen') && (
+        <DokumenteEvidenzenDialog
+          open={createEntity === 'dokumente_evidenzen' || dialogState?.entity === 'dokumente_evidenzen'}
+          onClose={() => { setCreateEntity(null); setDialogState(null); }}
+          onSubmit={dialogState?.entity === 'dokumente_evidenzen' ? handleUpdate : (fields: any) => handleCreate('dokumente_evidenzen', fields)}
+          defaultValues={dialogState?.entity === 'dokumente_evidenzen' ? dialogState.record?.fields : undefined}
+          kontroll_managementList={(data as any).kontrollManagement ?? []}
+          audit_managementList={(data as any).auditManagement ?? []}
+          enablePhotoScan={AI_PHOTO_SCAN['DokumenteEvidenzen']}
+          enablePhotoLocation={AI_PHOTO_LOCATION['DokumenteEvidenzen']}
+        />
+      )}
+      {viewState?.entity === 'bcm_notfallmanagement' && (
+        <BcmNotfallmanagementViewDialog
+          open={viewState?.entity === 'bcm_notfallmanagement'}
           onClose={() => setViewState(null)}
           record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'risikomanagement', record: r }); }}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'bcm_notfallmanagement', record: r }); }}
           asset_registerList={(data as any).assetRegister ?? []}
-          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
+        />
+      )}
+      {viewState?.entity === 'awareness_schulungen' && (
+        <AwarenessSchulungenViewDialog
+          open={viewState?.entity === 'awareness_schulungen'}
+          onClose={() => setViewState(null)}
+          record={viewState?.record}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'awareness_schulungen', record: r }); }}
+          framework_verwaltungList={(data as any).frameworkVerwaltung ?? []}
+        />
+      )}
+      {viewState?.entity === 'aufgaben_freigaben' && (
+        <AufgabenFreigabenViewDialog
+          open={viewState?.entity === 'aufgaben_freigaben'}
+          onClose={() => setViewState(null)}
+          record={viewState?.record}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'aufgaben_freigaben', record: r }); }}
+          risikomanagementList={(data as any).risikomanagement ?? []}
+          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
+          audit_managementList={(data as any).auditManagement ?? []}
         />
       )}
       {viewState?.entity === 'organisationseinheiten' && (
@@ -1292,31 +1311,13 @@ export default function AdminPage() {
           onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'organisationseinheiten', record: r }); }}
         />
       )}
-      {viewState?.entity === 'soa_management' && (
-        <SoaManagementViewDialog
-          open={viewState?.entity === 'soa_management'}
+      {viewState?.entity === 'asset_register' && (
+        <AssetRegisterViewDialog
+          open={viewState?.entity === 'asset_register'}
           onClose={() => setViewState(null)}
           record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'soa_management', record: r }); }}
-          kontroll_managementList={(data as any).kontrollManagement ?? []}
-        />
-      )}
-      {viewState?.entity === 'lieferantenmanagement' && (
-        <LieferantenmanagementViewDialog
-          open={viewState?.entity === 'lieferantenmanagement'}
-          onClose={() => setViewState(null)}
-          record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'lieferantenmanagement', record: r }); }}
-        />
-      )}
-      {viewState?.entity === 'dokumente_&_evidenzen' && (
-        <DokumenteEvidenzenViewDialog
-          open={viewState?.entity === 'dokumente_&_evidenzen'}
-          onClose={() => setViewState(null)}
-          record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'dokumente_&_evidenzen', record: r }); }}
-          kontroll_managementList={(data as any).kontrollManagement ?? []}
-          audit_managementList={(data as any).auditManagement ?? []}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'asset_register', record: r }); }}
+          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
         />
       )}
       {viewState?.entity === 'framework_verwaltung' && (
@@ -1327,15 +1328,23 @@ export default function AdminPage() {
           onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'framework_verwaltung', record: r }); }}
         />
       )}
-      {viewState?.entity === 'findings_&_abweichungen' && (
-        <FindingsAbweichungenViewDialog
-          open={viewState?.entity === 'findings_&_abweichungen'}
+      {viewState?.entity === 'risikomanagement' && (
+        <RisikomanagementViewDialog
+          open={viewState?.entity === 'risikomanagement'}
           onClose={() => setViewState(null)}
           record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'findings_&_abweichungen', record: r }); }}
-          audit_managementList={(data as any).auditManagement ?? []}
-          kontroll_managementList={(data as any).kontrollManagement ?? []}
-          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'risikomanagement', record: r }); }}
+          asset_registerList={(data as any).assetRegister ?? []}
+          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
+        />
+      )}
+      {viewState?.entity === 'maßnahmen_management' && (
+        <MassnahmenManagementViewDialog
+          open={viewState?.entity === 'maßnahmen_management'}
+          onClose={() => setViewState(null)}
+          record={viewState?.record}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'maßnahmen_management', record: r }); }}
+          risikomanagementList={(data as any).risikomanagement ?? []}
         />
       )}
       {viewState?.entity === 'kontroll_management' && (
@@ -1348,6 +1357,15 @@ export default function AdminPage() {
           maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
         />
       )}
+      {viewState?.entity === 'soa_management' && (
+        <SoaManagementViewDialog
+          open={viewState?.entity === 'soa_management'}
+          onClose={() => setViewState(null)}
+          record={viewState?.record}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'soa_management', record: r }); }}
+          kontroll_managementList={(data as any).kontrollManagement ?? []}
+        />
+      )}
       {viewState?.entity === 'audit_management' && (
         <AuditManagementViewDialog
           open={viewState?.entity === 'audit_management'}
@@ -1358,42 +1376,15 @@ export default function AdminPage() {
           organisationseinheitenList={(data as any).organisationseinheiten ?? []}
         />
       )}
-      {viewState?.entity === 'bcm_&_notfallmanagement' && (
-        <BcmNotfallmanagementViewDialog
-          open={viewState?.entity === 'bcm_&_notfallmanagement'}
+      {viewState?.entity === 'findings_abweichungen' && (
+        <FindingsAbweichungenViewDialog
+          open={viewState?.entity === 'findings_abweichungen'}
           onClose={() => setViewState(null)}
           record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'bcm_&_notfallmanagement', record: r }); }}
-          asset_registerList={(data as any).assetRegister ?? []}
-        />
-      )}
-      {viewState?.entity === 'aufgaben_&_freigaben' && (
-        <AufgabenFreigabenViewDialog
-          open={viewState?.entity === 'aufgaben_&_freigaben'}
-          onClose={() => setViewState(null)}
-          record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'aufgaben_&_freigaben', record: r }); }}
-          risikomanagementList={(data as any).risikomanagement ?? []}
-          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'findings_abweichungen', record: r }); }}
           audit_managementList={(data as any).auditManagement ?? []}
-        />
-      )}
-      {viewState?.entity === 'awareness_&_schulungen' && (
-        <AwarenessSchulungenViewDialog
-          open={viewState?.entity === 'awareness_&_schulungen'}
-          onClose={() => setViewState(null)}
-          record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'awareness_&_schulungen', record: r }); }}
-          framework_verwaltungList={(data as any).frameworkVerwaltung ?? []}
-        />
-      )}
-      {viewState?.entity === 'maßnahmen_management' && (
-        <MassnahmenManagementViewDialog
-          open={viewState?.entity === 'maßnahmen_management'}
-          onClose={() => setViewState(null)}
-          record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'maßnahmen_management', record: r }); }}
-          risikomanagementList={(data as any).risikomanagement ?? []}
+          kontroll_managementList={(data as any).kontrollManagement ?? []}
+          maßnahmen_managementList={(data as any).massnahmenManagement ?? []}
         />
       )}
       {viewState?.entity === 'incident_management' && (
@@ -1406,13 +1397,12 @@ export default function AdminPage() {
           organisationseinheitenList={(data as any).organisationseinheiten ?? []}
         />
       )}
-      {viewState?.entity === 'asset_register' && (
-        <AssetRegisterViewDialog
-          open={viewState?.entity === 'asset_register'}
+      {viewState?.entity === 'lieferantenmanagement' && (
+        <LieferantenmanagementViewDialog
+          open={viewState?.entity === 'lieferantenmanagement'}
           onClose={() => setViewState(null)}
           record={viewState?.record}
-          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'asset_register', record: r }); }}
-          organisationseinheitenList={(data as any).organisationseinheiten ?? []}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'lieferantenmanagement', record: r }); }}
         />
       )}
       {viewState?.entity === 'policy_management' && (
@@ -1422,6 +1412,16 @@ export default function AdminPage() {
           record={viewState?.record}
           onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'policy_management', record: r }); }}
           framework_verwaltungList={(data as any).frameworkVerwaltung ?? []}
+        />
+      )}
+      {viewState?.entity === 'dokumente_evidenzen' && (
+        <DokumenteEvidenzenViewDialog
+          open={viewState?.entity === 'dokumente_evidenzen'}
+          onClose={() => setViewState(null)}
+          record={viewState?.record}
+          onEdit={(r: any) => { setViewState(null); setDialogState({ entity: 'dokumente_evidenzen', record: r }); }}
+          kontroll_managementList={(data as any).kontrollManagement ?? []}
+          audit_managementList={(data as any).auditManagement ?? []}
         />
       )}
 

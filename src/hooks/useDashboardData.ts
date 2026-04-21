@@ -1,64 +1,64 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import type { Risikomanagement, Organisationseinheiten, SoaManagement, Lieferantenmanagement, DokumenteEvidenzen, FrameworkVerwaltung, FindingsAbweichungen, KontrollManagement, AuditManagement, BcmNotfallmanagement, AufgabenFreigaben, AwarenessSchulungen, MassnahmenManagement, IncidentManagement, AssetRegister, PolicyManagement } from '@/types/app';
+import type { BcmNotfallmanagement, AwarenessSchulungen, AufgabenFreigaben, Organisationseinheiten, AssetRegister, FrameworkVerwaltung, Risikomanagement, MassnahmenManagement, KontrollManagement, SoaManagement, AuditManagement, FindingsAbweichungen, IncidentManagement, Lieferantenmanagement, PolicyManagement, DokumenteEvidenzen } from '@/types/app';
 import { LivingAppsService } from '@/services/livingAppsService';
 
 export function useDashboardData() {
-  const [risikomanagement, setRisikomanagement] = useState<Risikomanagement[]>([]);
-  const [organisationseinheiten, setOrganisationseinheiten] = useState<Organisationseinheiten[]>([]);
-  const [soaManagement, setSoaManagement] = useState<SoaManagement[]>([]);
-  const [lieferantenmanagement, setLieferantenmanagement] = useState<Lieferantenmanagement[]>([]);
-  const [dokumenteEvidenzen, setDokumenteEvidenzen] = useState<DokumenteEvidenzen[]>([]);
-  const [frameworkVerwaltung, setFrameworkVerwaltung] = useState<FrameworkVerwaltung[]>([]);
-  const [findingsAbweichungen, setFindingsAbweichungen] = useState<FindingsAbweichungen[]>([]);
-  const [kontrollManagement, setKontrollManagement] = useState<KontrollManagement[]>([]);
-  const [auditManagement, setAuditManagement] = useState<AuditManagement[]>([]);
   const [bcmNotfallmanagement, setBcmNotfallmanagement] = useState<BcmNotfallmanagement[]>([]);
-  const [aufgabenFreigaben, setAufgabenFreigaben] = useState<AufgabenFreigaben[]>([]);
   const [awarenessSchulungen, setAwarenessSchulungen] = useState<AwarenessSchulungen[]>([]);
-  const [massnahmenManagement, setMassnahmenManagement] = useState<MassnahmenManagement[]>([]);
-  const [incidentManagement, setIncidentManagement] = useState<IncidentManagement[]>([]);
+  const [aufgabenFreigaben, setAufgabenFreigaben] = useState<AufgabenFreigaben[]>([]);
+  const [organisationseinheiten, setOrganisationseinheiten] = useState<Organisationseinheiten[]>([]);
   const [assetRegister, setAssetRegister] = useState<AssetRegister[]>([]);
+  const [frameworkVerwaltung, setFrameworkVerwaltung] = useState<FrameworkVerwaltung[]>([]);
+  const [risikomanagement, setRisikomanagement] = useState<Risikomanagement[]>([]);
+  const [massnahmenManagement, setMassnahmenManagement] = useState<MassnahmenManagement[]>([]);
+  const [kontrollManagement, setKontrollManagement] = useState<KontrollManagement[]>([]);
+  const [soaManagement, setSoaManagement] = useState<SoaManagement[]>([]);
+  const [auditManagement, setAuditManagement] = useState<AuditManagement[]>([]);
+  const [findingsAbweichungen, setFindingsAbweichungen] = useState<FindingsAbweichungen[]>([]);
+  const [incidentManagement, setIncidentManagement] = useState<IncidentManagement[]>([]);
+  const [lieferantenmanagement, setLieferantenmanagement] = useState<Lieferantenmanagement[]>([]);
   const [policyManagement, setPolicyManagement] = useState<PolicyManagement[]>([]);
+  const [dokumenteEvidenzen, setDokumenteEvidenzen] = useState<DokumenteEvidenzen[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   const fetchAll = useCallback(async () => {
     setError(null);
     try {
-      const [risikomanagementData, organisationseinheitenData, soaManagementData, lieferantenmanagementData, dokumenteEvidenzenData, frameworkVerwaltungData, findingsAbweichungenData, kontrollManagementData, auditManagementData, bcmNotfallmanagementData, aufgabenFreigabenData, awarenessSchulungenData, massnahmenManagementData, incidentManagementData, assetRegisterData, policyManagementData] = await Promise.all([
-        LivingAppsService.getRisikomanagement(),
-        LivingAppsService.getOrganisationseinheiten(),
-        LivingAppsService.getSoaManagement(),
-        LivingAppsService.getLieferantenmanagement(),
-        LivingAppsService.getDokumenteEvidenzen(),
-        LivingAppsService.getFrameworkVerwaltung(),
-        LivingAppsService.getFindingsAbweichungen(),
-        LivingAppsService.getKontrollManagement(),
-        LivingAppsService.getAuditManagement(),
+      const [bcmNotfallmanagementData, awarenessSchulungenData, aufgabenFreigabenData, organisationseinheitenData, assetRegisterData, frameworkVerwaltungData, risikomanagementData, massnahmenManagementData, kontrollManagementData, soaManagementData, auditManagementData, findingsAbweichungenData, incidentManagementData, lieferantenmanagementData, policyManagementData, dokumenteEvidenzenData] = await Promise.all([
         LivingAppsService.getBcmNotfallmanagement(),
-        LivingAppsService.getAufgabenFreigaben(),
         LivingAppsService.getAwarenessSchulungen(),
-        LivingAppsService.getMassnahmenManagement(),
-        LivingAppsService.getIncidentManagement(),
+        LivingAppsService.getAufgabenFreigaben(),
+        LivingAppsService.getOrganisationseinheiten(),
         LivingAppsService.getAssetRegister(),
+        LivingAppsService.getFrameworkVerwaltung(),
+        LivingAppsService.getRisikomanagement(),
+        LivingAppsService.getMassnahmenManagement(),
+        LivingAppsService.getKontrollManagement(),
+        LivingAppsService.getSoaManagement(),
+        LivingAppsService.getAuditManagement(),
+        LivingAppsService.getFindingsAbweichungen(),
+        LivingAppsService.getIncidentManagement(),
+        LivingAppsService.getLieferantenmanagement(),
         LivingAppsService.getPolicyManagement(),
+        LivingAppsService.getDokumenteEvidenzen(),
       ]);
-      setRisikomanagement(risikomanagementData);
-      setOrganisationseinheiten(organisationseinheitenData);
-      setSoaManagement(soaManagementData);
-      setLieferantenmanagement(lieferantenmanagementData);
-      setDokumenteEvidenzen(dokumenteEvidenzenData);
-      setFrameworkVerwaltung(frameworkVerwaltungData);
-      setFindingsAbweichungen(findingsAbweichungenData);
-      setKontrollManagement(kontrollManagementData);
-      setAuditManagement(auditManagementData);
       setBcmNotfallmanagement(bcmNotfallmanagementData);
-      setAufgabenFreigaben(aufgabenFreigabenData);
       setAwarenessSchulungen(awarenessSchulungenData);
-      setMassnahmenManagement(massnahmenManagementData);
-      setIncidentManagement(incidentManagementData);
+      setAufgabenFreigaben(aufgabenFreigabenData);
+      setOrganisationseinheiten(organisationseinheitenData);
       setAssetRegister(assetRegisterData);
+      setFrameworkVerwaltung(frameworkVerwaltungData);
+      setRisikomanagement(risikomanagementData);
+      setMassnahmenManagement(massnahmenManagementData);
+      setKontrollManagement(kontrollManagementData);
+      setSoaManagement(soaManagementData);
+      setAuditManagement(auditManagementData);
+      setFindingsAbweichungen(findingsAbweichungenData);
+      setIncidentManagement(incidentManagementData);
+      setLieferantenmanagement(lieferantenmanagementData);
       setPolicyManagement(policyManagementData);
+      setDokumenteEvidenzen(dokumenteEvidenzenData);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Fehler beim Laden der Daten'));
     } finally {
@@ -72,40 +72,40 @@ export function useDashboardData() {
   useEffect(() => {
     async function silentRefresh() {
       try {
-        const [risikomanagementData, organisationseinheitenData, soaManagementData, lieferantenmanagementData, dokumenteEvidenzenData, frameworkVerwaltungData, findingsAbweichungenData, kontrollManagementData, auditManagementData, bcmNotfallmanagementData, aufgabenFreigabenData, awarenessSchulungenData, massnahmenManagementData, incidentManagementData, assetRegisterData, policyManagementData] = await Promise.all([
-          LivingAppsService.getRisikomanagement(),
-          LivingAppsService.getOrganisationseinheiten(),
-          LivingAppsService.getSoaManagement(),
-          LivingAppsService.getLieferantenmanagement(),
-          LivingAppsService.getDokumenteEvidenzen(),
-          LivingAppsService.getFrameworkVerwaltung(),
-          LivingAppsService.getFindingsAbweichungen(),
-          LivingAppsService.getKontrollManagement(),
-          LivingAppsService.getAuditManagement(),
+        const [bcmNotfallmanagementData, awarenessSchulungenData, aufgabenFreigabenData, organisationseinheitenData, assetRegisterData, frameworkVerwaltungData, risikomanagementData, massnahmenManagementData, kontrollManagementData, soaManagementData, auditManagementData, findingsAbweichungenData, incidentManagementData, lieferantenmanagementData, policyManagementData, dokumenteEvidenzenData] = await Promise.all([
           LivingAppsService.getBcmNotfallmanagement(),
-          LivingAppsService.getAufgabenFreigaben(),
           LivingAppsService.getAwarenessSchulungen(),
-          LivingAppsService.getMassnahmenManagement(),
-          LivingAppsService.getIncidentManagement(),
+          LivingAppsService.getAufgabenFreigaben(),
+          LivingAppsService.getOrganisationseinheiten(),
           LivingAppsService.getAssetRegister(),
+          LivingAppsService.getFrameworkVerwaltung(),
+          LivingAppsService.getRisikomanagement(),
+          LivingAppsService.getMassnahmenManagement(),
+          LivingAppsService.getKontrollManagement(),
+          LivingAppsService.getSoaManagement(),
+          LivingAppsService.getAuditManagement(),
+          LivingAppsService.getFindingsAbweichungen(),
+          LivingAppsService.getIncidentManagement(),
+          LivingAppsService.getLieferantenmanagement(),
           LivingAppsService.getPolicyManagement(),
+          LivingAppsService.getDokumenteEvidenzen(),
         ]);
-        setRisikomanagement(risikomanagementData);
-        setOrganisationseinheiten(organisationseinheitenData);
-        setSoaManagement(soaManagementData);
-        setLieferantenmanagement(lieferantenmanagementData);
-        setDokumenteEvidenzen(dokumenteEvidenzenData);
-        setFrameworkVerwaltung(frameworkVerwaltungData);
-        setFindingsAbweichungen(findingsAbweichungenData);
-        setKontrollManagement(kontrollManagementData);
-        setAuditManagement(auditManagementData);
         setBcmNotfallmanagement(bcmNotfallmanagementData);
-        setAufgabenFreigaben(aufgabenFreigabenData);
         setAwarenessSchulungen(awarenessSchulungenData);
-        setMassnahmenManagement(massnahmenManagementData);
-        setIncidentManagement(incidentManagementData);
+        setAufgabenFreigaben(aufgabenFreigabenData);
+        setOrganisationseinheiten(organisationseinheitenData);
         setAssetRegister(assetRegisterData);
+        setFrameworkVerwaltung(frameworkVerwaltungData);
+        setRisikomanagement(risikomanagementData);
+        setMassnahmenManagement(massnahmenManagementData);
+        setKontrollManagement(kontrollManagementData);
+        setSoaManagement(soaManagementData);
+        setAuditManagement(auditManagementData);
+        setFindingsAbweichungen(findingsAbweichungenData);
+        setIncidentManagement(incidentManagementData);
+        setLieferantenmanagement(lieferantenmanagementData);
         setPolicyManagement(policyManagementData);
+        setDokumenteEvidenzen(dokumenteEvidenzenData);
       } catch {
         // silently ignore — stale data is better than no data
       }
@@ -115,23 +115,35 @@ export function useDashboardData() {
     return () => window.removeEventListener('dashboard-refresh', handleRefresh);
   }, []);
 
-  const risikomanagementMap = useMemo(() => {
-    const m = new Map<string, Risikomanagement>();
-    risikomanagement.forEach(r => m.set(r.record_id, r));
-    return m;
-  }, [risikomanagement]);
-
   const organisationseinheitenMap = useMemo(() => {
     const m = new Map<string, Organisationseinheiten>();
     organisationseinheiten.forEach(r => m.set(r.record_id, r));
     return m;
   }, [organisationseinheiten]);
 
+  const assetRegisterMap = useMemo(() => {
+    const m = new Map<string, AssetRegister>();
+    assetRegister.forEach(r => m.set(r.record_id, r));
+    return m;
+  }, [assetRegister]);
+
   const frameworkVerwaltungMap = useMemo(() => {
     const m = new Map<string, FrameworkVerwaltung>();
     frameworkVerwaltung.forEach(r => m.set(r.record_id, r));
     return m;
   }, [frameworkVerwaltung]);
+
+  const risikomanagementMap = useMemo(() => {
+    const m = new Map<string, Risikomanagement>();
+    risikomanagement.forEach(r => m.set(r.record_id, r));
+    return m;
+  }, [risikomanagement]);
+
+  const massnahmenManagementMap = useMemo(() => {
+    const m = new Map<string, MassnahmenManagement>();
+    massnahmenManagement.forEach(r => m.set(r.record_id, r));
+    return m;
+  }, [massnahmenManagement]);
 
   const kontrollManagementMap = useMemo(() => {
     const m = new Map<string, KontrollManagement>();
@@ -145,17 +157,5 @@ export function useDashboardData() {
     return m;
   }, [auditManagement]);
 
-  const massnahmenManagementMap = useMemo(() => {
-    const m = new Map<string, MassnahmenManagement>();
-    massnahmenManagement.forEach(r => m.set(r.record_id, r));
-    return m;
-  }, [massnahmenManagement]);
-
-  const assetRegisterMap = useMemo(() => {
-    const m = new Map<string, AssetRegister>();
-    assetRegister.forEach(r => m.set(r.record_id, r));
-    return m;
-  }, [assetRegister]);
-
-  return { risikomanagement, setRisikomanagement, organisationseinheiten, setOrganisationseinheiten, soaManagement, setSoaManagement, lieferantenmanagement, setLieferantenmanagement, dokumenteEvidenzen, setDokumenteEvidenzen, frameworkVerwaltung, setFrameworkVerwaltung, findingsAbweichungen, setFindingsAbweichungen, kontrollManagement, setKontrollManagement, auditManagement, setAuditManagement, bcmNotfallmanagement, setBcmNotfallmanagement, aufgabenFreigaben, setAufgabenFreigaben, awarenessSchulungen, setAwarenessSchulungen, massnahmenManagement, setMassnahmenManagement, incidentManagement, setIncidentManagement, assetRegister, setAssetRegister, policyManagement, setPolicyManagement, loading, error, fetchAll, risikomanagementMap, organisationseinheitenMap, frameworkVerwaltungMap, kontrollManagementMap, auditManagementMap, massnahmenManagementMap, assetRegisterMap };
+  return { bcmNotfallmanagement, setBcmNotfallmanagement, awarenessSchulungen, setAwarenessSchulungen, aufgabenFreigaben, setAufgabenFreigaben, organisationseinheiten, setOrganisationseinheiten, assetRegister, setAssetRegister, frameworkVerwaltung, setFrameworkVerwaltung, risikomanagement, setRisikomanagement, massnahmenManagement, setMassnahmenManagement, kontrollManagement, setKontrollManagement, soaManagement, setSoaManagement, auditManagement, setAuditManagement, findingsAbweichungen, setFindingsAbweichungen, incidentManagement, setIncidentManagement, lieferantenmanagement, setLieferantenmanagement, policyManagement, setPolicyManagement, dokumenteEvidenzen, setDokumenteEvidenzen, loading, error, fetchAll, organisationseinheitenMap, assetRegisterMap, frameworkVerwaltungMap, risikomanagementMap, massnahmenManagementMap, kontrollManagementMap, auditManagementMap };
 }

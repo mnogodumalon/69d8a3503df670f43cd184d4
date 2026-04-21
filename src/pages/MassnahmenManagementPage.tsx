@@ -74,7 +74,7 @@ export default function MassnahmenManagementPage() {
   function getRisikomanagementDisplayName(url?: unknown) {
     if (!url) return '—';
     const id = extractRecordId(url);
-    return risikomanagementList.find(r => r.record_id === id)?.fields.risk_description ?? '—';
+    return risikomanagementList.find(r => r.record_id === id)?.fields.risk_owner_firstname ?? '—';
   }
 
   const filtered = records.filter(r => {

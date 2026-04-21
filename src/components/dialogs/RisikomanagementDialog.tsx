@@ -15,8 +15,8 @@ import {
   SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { IconCamera, IconCircleCheck, IconFileText, IconLoader2, IconPhotoPlus, IconSparkles, IconUpload, IconX } from '@tabler/icons-react';
-import { fileToDataUri, extractFromPhoto, extractPhotoMeta, reverseGeocode } from '@/lib/ai';
+import { IconArrowBigDownLinesFilled, IconCamera, IconCircleCheck, IconClipboard, IconFileText, IconLoader2, IconPhotoPlus, IconSparkles, IconUpload, IconX } from '@tabler/icons-react';
+import { fileToDataUri, extractFromInput, extractPhotoMeta, reverseGeocode } from '@/lib/ai';
 import { lookupKey, lookupKeys } from '@/lib/formatters';
 
 interface RisikomanagementDialogProps {
@@ -45,12 +45,14 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
   const [showProfileInfo, setShowProfileInfo] = useState(false);
   const [profileData, setProfileData] = useState<Record<string, unknown> | null>(null);
   const [profileLoading, setProfileLoading] = useState(false);
+  const [aiText, setAiText] = useState('');
 
   useEffect(() => {
     if (open) {
       setFields(defaultValues ?? {});
       setPreview(null);
       setScanSuccess(false);
+      setAiText('');
     }
   }, [open, defaultValues]);
   useEffect(() => {
@@ -82,22 +84,28 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
     }
   }
 
-  async function handlePhotoScan(file: File) {
+  async function handleAiExtract(file?: File) {
+    if (!file && !aiText.trim()) return;
     setScanning(true);
     setScanSuccess(false);
     try {
-      const [uri, meta] = await Promise.all([fileToDataUri(file), extractPhotoMeta(file)]);
-      if (file.type.startsWith('image/')) setPreview(uri);
-      const gps = enablePhotoLocation ? meta?.gps ?? null : null;
-      const parts: string[] = [];
+      let uri: string | undefined;
+      let gps: { latitude: number; longitude: number } | null = null;
       let geoAddr = '';
-      if (gps) {
-        geoAddr = await reverseGeocode(gps.latitude, gps.longitude);
-        parts.push(`Location coordinates: ${gps.latitude}, ${gps.longitude}`);
-        if (geoAddr) parts.push(`Reverse-geocoded address: ${geoAddr}`);
-      }
-      if (meta?.dateTime) {
-        parts.push(`Date taken: ${meta.dateTime.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3')}`);
+      const parts: string[] = [];
+      if (file) {
+        const [dataUri, meta] = await Promise.all([fileToDataUri(file), extractPhotoMeta(file)]);
+        uri = dataUri;
+        if (file.type.startsWith('image/')) setPreview(uri);
+        gps = enablePhotoLocation ? meta?.gps ?? null : null;
+        if (gps) {
+          geoAddr = await reverseGeocode(gps.latitude, gps.longitude);
+          parts.push(`Location coordinates: ${gps.latitude}, ${gps.longitude}`);
+          if (geoAddr) parts.push(`Reverse-geocoded address: ${geoAddr}`);
+        }
+        if (meta?.dateTime) {
+          parts.push(`Date taken: ${meta.dateTime.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3')}`);
+        }
       }
       const contextParts: string[] = [];
       if (parts.length) {
@@ -115,7 +123,12 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
       }
       const photoContext = contextParts.length ? contextParts.join('\n') : undefined;
       const schema = `{\n  "risk_description": string | null, // Risikobeschreibung\n  "risk_category": LookupValue[] | null, // Risikokategorie (select one or more keys: "infosec" | "datenschutz" | "betrieb" | "compliance" | "drittpartei" | "physisch" | "personal" | "sonstiges") mapping: infosec=Informationssicherheit, datenschutz=Datenschutz, betrieb=Betriebsrisiko, compliance=Compliance, drittpartei=Drittpartei / Lieferant, physisch=Physische Sicherheit, personal=Personalrisiko, sonstiges=Sonstiges\n  "risk_asset": string | null, // Display name from Asset-Register (see <available-records>)\n  "risk_org_unit": string | null, // Display name from Organisationseinheiten (see <available-records>)\n  "risk_probability": LookupValue | null, // Eintrittswahrscheinlichkeit (select one key: "p1" | "p2" | "p3" | "p4" | "p5") mapping: p1=1 – Sehr gering, p2=2 – Gering, p3=3 – Mittel, p4=4 – Hoch, p5=5 – Sehr hoch\n  "risk_impact": LookupValue | null, // Schadensausmaß (select one key: "i1" | "i2" | "i3" | "i4" | "i5") mapping: i1=1 – Sehr gering, i2=2 – Gering, i3=3 – Mittel, i4=4 – Hoch, i5=5 – Sehr hoch\n  "risk_score_brutto": number | null, // Risikoscore Brutto (berechnet)\n  "risk_treatment": LookupValue | null, // Risikobehandlung (select one key: "reduzieren" | "akzeptieren" | "vermeiden" | "uebertragen") mapping: reduzieren=Reduzieren, akzeptieren=Akzeptieren, vermeiden=Vermeiden, uebertragen=Übertragen\n  "risk_probability_netto": LookupValue | null, // Eintrittswahrscheinlichkeit (Netto) (select one key: "p1" | "p2" | "p3" | "p4" | "p5") mapping: p1=1 – Sehr gering, p2=2 – Gering, p3=3 – Mittel, p4=4 – Hoch, p5=5 – Sehr hoch\n  "risk_confidentiality": LookupValue | null, // Vertraulichkeit (select one key: "gering" | "mittel" | "hoch") mapping: gering=Gering, mittel=Mittel, hoch=Hoch\n  "risk_integrity": LookupValue | null, // Integrität (select one key: "gering" | "mittel" | "hoch") mapping: gering=Gering, mittel=Mittel, hoch=Hoch\n  "risk_availability": LookupValue | null, // Verfügbarkeit (select one key: "gering" | "mittel" | "hoch") mapping: gering=Gering, mittel=Mittel, hoch=Hoch\n  "risk_impact_netto": LookupValue | null, // Schadensausmaß (Netto) (select one key: "i1" | "i2" | "i3" | "i4" | "i5") mapping: i1=1 – Sehr gering, i2=2 – Gering, i3=3 – Mittel, i4=4 – Hoch, i5=5 – Sehr hoch\n  "risk_owner_firstname": string | null, // Risikoverantwortlicher Vorname\n  "risk_owner_lastname": string | null, // Risikoverantwortlicher Nachname\n  "risk_review_date": string | null, // YYYY-MM-DD\n  "risk_status": LookupValue | null, // Status (select one key: "offen" | "in_behandlung" | "akzeptiert" | "geschlossen") mapping: offen=Offen, in_behandlung=In Behandlung, akzeptiert=Akzeptiert, geschlossen=Geschlossen\n  "risk_notes": string | null, // Anmerkungen\n}`;
-      const raw = await extractFromPhoto<Record<string, unknown>>(uri, schema, photoContext, DIALOG_INTENT);
+      const raw = await extractFromInput<Record<string, unknown>>(schema, {
+        dataUri: uri,
+        userText: aiText.trim() || undefined,
+        photoContext,
+        intent: DIALOG_INTENT,
+      });
       setFields(prev => {
         const merged = { ...prev } as Record<string, unknown>;
         function matchName(name: string, candidates: string[]): boolean {
@@ -139,6 +152,7 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
         }
         return merged as Partial<Risikomanagement['fields']>;
       });
+      setAiText('');
       setScanSuccess(true);
       setTimeout(() => setScanSuccess(false), 3000);
     } catch (err) {
@@ -151,7 +165,7 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
-    if (f) handlePhotoScan(f);
+    if (f) handleAiExtract(f);
     e.target.value = '';
   }
 
@@ -173,7 +187,7 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
     setDragOver(false);
     const file = e.dataTransfer.files?.[0];
     if (file && (file.type.startsWith('image/') || file.type === 'application/pdf')) {
-      handlePhotoScan(file);
+      handleAiExtract(file);
     }
   }, []);
 
@@ -193,7 +207,7 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
                 <IconSparkles className="h-4 w-4 text-primary" />
                 KI-Assistent
               </div>
-              <p className="text-xs text-muted-foreground mt-0.5">Versteht deine Fotos / Dokumente und füllt alles für dich aus</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Versteht Fotos, Dokumente und Text und füllt alles für dich aus</p>
             </div>
             <div className="flex items-start gap-2 pl-0.5">
               <Checkbox
@@ -290,16 +304,16 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
               )}
             </div>
 
-            <div className="flex gap-2">
-              <Button type="button" variant="outline" size="sm" className="flex-1 h-9 text-xs" disabled={scanning}
+            <div className="grid grid-cols-3 gap-2">
+              <Button type="button" variant="outline" size="sm" className="h-10 text-xs" disabled={scanning}
                 onClick={e => { e.stopPropagation(); cameraInputRef.current?.click(); }}>
-                <IconCamera className="h-3.5 w-3.5 mr-1.5" />Kamera
+                <IconCamera className="h-3.5 w-3.5 mr-1" />Kamera
               </Button>
-              <Button type="button" variant="outline" size="sm" className="flex-1 h-9 text-xs" disabled={scanning}
+              <Button type="button" variant="outline" size="sm" className="h-10 text-xs" disabled={scanning}
                 onClick={e => { e.stopPropagation(); fileInputRef.current?.click(); }}>
-                <IconUpload className="h-3.5 w-3.5 mr-1.5" />Foto wählen
+                <IconUpload className="h-3.5 w-3.5 mr-1" />Foto wählen
               </Button>
-              <Button type="button" variant="outline" size="sm" className="flex-1 h-9 text-xs" disabled={scanning}
+              <Button type="button" variant="outline" size="sm" className="h-10 text-xs" disabled={scanning}
                 onClick={e => {
                   e.stopPropagation();
                   if (fileInputRef.current) {
@@ -308,8 +322,59 @@ export function RisikomanagementDialog({ open, onClose, onSubmit, defaultValues,
                     setTimeout(() => { if (fileInputRef.current) fileInputRef.current.accept = 'image/*,application/pdf'; }, 100);
                   }
                 }}>
-                <IconFileText className="h-3.5 w-3.5 mr-1.5" />Dokument
+                <IconFileText className="h-3.5 w-3.5 mr-1" />Dokument
               </Button>
+            </div>
+
+            <div className="relative">
+              <Textarea
+                placeholder="Text eingeben oder einfügen, z.B. Notizen, E-Mails, Beschreibungen..."
+                value={aiText}
+                onChange={e => {
+                  setAiText(e.target.value);
+                  const el = e.target;
+                  el.style.height = 'auto';
+                  el.style.height = Math.min(Math.max(el.scrollHeight, 56), 96) + 'px';
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && aiText.trim() && !scanning) {
+                    e.preventDefault();
+                    handleAiExtract();
+                  }
+                }}
+                disabled={scanning}
+                rows={2}
+                className="pr-12 resize-none text-sm overflow-y-auto"
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-2 h-8 w-8 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                disabled={scanning}
+                onClick={async () => {
+                  try {
+                    const text = await navigator.clipboard.readText();
+                    if (text) setAiText(prev => prev ? prev + '\n' + text : text);
+                  } catch {}
+                }}
+                title="Paste"
+              >
+                <IconClipboard className="h-4 w-4" />
+              </button>
+            </div>
+            {aiText.trim() && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full h-9 text-xs"
+                disabled={scanning}
+                onClick={() => handleAiExtract()}
+              >
+                <IconSparkles className="h-3.5 w-3.5 mr-1.5" />Analysieren
+              </Button>
+            )}
+            <div className="flex justify-center pt-1">
+              <IconArrowBigDownLinesFilled className="h-8 w-8 text-muted-foreground/30" />
             </div>
           </div>
         )}

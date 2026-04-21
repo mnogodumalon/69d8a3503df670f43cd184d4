@@ -80,7 +80,7 @@ export default function AufgabenFreigabenPage() {
   function getRisikomanagementDisplayName(url?: unknown) {
     if (!url) return '—';
     const id = extractRecordId(url);
-    return risikomanagementList.find(r => r.record_id === id)?.fields.risk_description ?? '—';
+    return risikomanagementList.find(r => r.record_id === id)?.fields.risk_owner_firstname ?? '—';
   }
 
   function getMassnahmenManagementDisplayName(url?: unknown) {
